@@ -1,45 +1,58 @@
-# 扬州 THO02 阵营探索小程序 MVP
+# 扬州 THO02 阵营探索
 
-基于微信小程序原生开发 + CloudBase 云函数的 MVP 骨架。
+当前仓库保留了早期微信小程序骨架，但现在主用的是本地网站版。
+
+## 现在怎么跑
+
+1. 在项目根目录打开终端
+2. 运行：
+
+```bash
+npm start
+```
+
+3. 浏览器打开：
+
+```text
+http://127.0.0.1:3000
+```
+
+## 网站版特性
+
+- 注册、体力恢复、行动结算、随机事件都保留
+- 不依赖微信云开发
+- 自动使用 `shared/seeds` 里的测试数据初始化
+- 本地状态保存在 `data/state.json`
+
+## 测试门票码
+
+可直接使用：
+
+- `TEST0001`
+- `TEST0002`
+- `TEST0003`
+- `TEST0004`
+- `TEST0005`
+
+更多测试码见 [shared/seeds/ticket-codes.json](G:\Programming\Small_interests_projects\Yangzhou-THO\shared\seeds\ticket-codes.json)。
 
 ## 目录
 
-- `miniprogram/`: 小程序前端页面与公共工具
-- `cloudfunctions/`: 云函数入口
-- `shared/`: 前后端共用的纯函数与默认配置
-- `scripts/`: 本地可执行的初始化与测试脚本
+- `web/`: 网站版前端和本地 Node 服务
+- `shared/`: 共用业务规则和默认种子数据
+- `pictures/`: 角色立绘资源
+- `data/`: 网站版运行时生成的本地状态
+- `miniprogram/`: 旧的小程序前端骨架
+- `cloudfunctions/`: 旧的云函数骨架
 
-## 已实现范围
+## 重置数据
 
-- 注册页、主页、个人信息页、管理员页、大屏页的前端骨架
-- `getInitState`、`registerUser`、`getHomeState`、`performAction`、`adminAdjustScore`、`adminExportData` 云函数入口
-- 体力恢复、阵营人数限制、行动结算、随机事件、称号刷新等核心规则纯函数
-- 默认配置种子数据
-- 本地规则测试脚本
+网站右下角有 `重置测试数据` 按钮。
 
-## 使用方式
-
-1. 在微信开发者工具中打开本目录。
-2. 将 `project.config.json` 中的 `appid` 替换为真实小程序 AppID。
-3. 在 `miniprogram/app.js` 中将 `env` 替换为真实 CloudBase 环境 ID。
-4. 先执行一次 `scripts/seed-data.js` 的逻辑，或把 `shared/seeds/*.json` 导入云数据库。
-5. 在云开发控制台创建集合：
-   - `activity_config`
-   - `teams`
-   - `ticket_codes`
-   - `users`
-   - `actions_config`
-   - `random_events_config`
-   - `titles_config`
-   - `action_logs`
-   - `admin_users`
-   - `admin_logs`
-   - `request_locks`
+如果你想手工重置，也可以删除 [data/state.json](G:\Programming\Small_interests_projects\Yangzhou-THO\data\state.json) 后重新执行 `npm start`。
 
 ## 本地测试
 
 ```bash
 node scripts/run-tests.js
 ```
-
-这些测试只覆盖纯业务规则，不覆盖微信运行时与云数据库事务。

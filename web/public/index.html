@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>扬州 THO02 阵营探索</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <aside class="scoreboard">
+        <section class="scoreboard-card">
+          <p class="eyebrow">阵营探索</p>
+          <h1>扬州 THO02 阵营探索</h1>
+          <p class="scoreboard-copy">
+            选择阵营、恢复体力、执行行动，为自己的小队推进探索进度。
+          </p>
+        </section>
+
+        <section class="scoreboard-card">
+          <p class="eyebrow">阵营战况</p>
+          <div id="team-board" class="team-board"></div>
+        </section>
+
+        <section class="scoreboard-card">
+          <p class="eyebrow">最近行动</p>
+          <div id="recent-logs" class="recent-logs"></div>
+        </section>
+      </aside>
+
+      <main class="main-stage">
+        <section id="register-view" class="panel">
+          <div class="panel-head">
+            <p class="eyebrow">第一步</p>
+            <h2>选择探索小队</h2>
+          </div>
+
+          <div class="field-group">
+            <label for="ticket-code">门票 code</label>
+            <input id="ticket-code" type="text" placeholder="例如 TEST0001" />
+          </div>
+
+          <div id="team-picks" class="team-picks"></div>
+
+          <div class="field-group">
+            <label for="display-name">昵称</label>
+            <input id="display-name" type="text" placeholder="默认会自动生成游客编号" />
+          </div>
+
+          <p id="register-error" class="error-text hidden"></p>
+          <button id="register-btn" class="primary-btn" type="button">确认注册</button>
+        </section>
+
+        <section id="home-view" class="panel hidden">
+          <div class="hero">
+            <div>
+              <p class="eyebrow">当前玩家</p>
+              <h2 id="user-name"></h2>
+              <p id="user-team" class="hero-subtitle"></p>
+            </div>
+            <div class="hero-stats">
+              <div><span>体力</span><strong id="user-stamina"></strong></div>
+              <div><span>积分</span><strong id="user-score"></strong></div>
+              <div><span>称号</span><strong id="user-title"></strong></div>
+            </div>
+          </div>
+
+          <section class="panel-block">
+            <div class="panel-head">
+              <p class="eyebrow">第二步</p>
+              <h3>执行行动</h3>
+            </div>
+            <div id="actions-grid" class="actions-grid"></div>
+          </section>
+
+          <section class="panel-block">
+            <div class="panel-head">
+              <p class="eyebrow">个人记录</p>
+              <h3>最近操作</h3>
+            </div>
+            <div id="personal-log" class="recent-logs"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <div id="result-modal" class="modal hidden">
+      <div class="modal-card">
+        <button id="close-modal" class="close-btn" type="button">×</button>
+        <p class="eyebrow">行动结果</p>
+        <h3 id="modal-title"></h3>
+        <p id="modal-copy" class="modal-copy"></p>
+        <div class="modal-stats">
+          <span id="modal-score"></span>
+          <span id="modal-team"></span>
+          <span id="modal-stamina"></span>
+        </div>
+        <div id="event-box" class="event-box hidden">
+          <img id="event-image" alt="" />
+          <div>
+            <p id="event-character" class="eyebrow"></p>
+            <h4 id="event-title"></h4>
+            <p id="event-description"></p>
+            <p id="event-effect" class="event-effect"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button id="reset-btn" class="reset-btn" type="button">重置测试数据</button>
+    <script src="/app.js"></script>
+  </body>
+</html>

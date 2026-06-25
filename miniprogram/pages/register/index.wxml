@@ -10,10 +10,17 @@
     />
   </view>
 
-  <view wx:for="{{teams}}" wx:key="id" class="team-card team-choice {{selectedTeam === item.id ? 'team-choice-active' : ''}}" data-team-id="{{item.id}}" bindtap="onSelectTeam">
-    <image class="team-image" src="{{item.portrait_url}}" mode="aspectFill" />
+  <view
+    wx:for="{{teams}}"
+    wx:key="id"
+    class="team-card team-choice {{selectedTeam === item.id ? 'team-choice-active' : ''}} {{item.accent}}"
+    data-team-id="{{item.id}}"
+    bindtap="onSelectTeam"
+  >
+    <image class="team-image" src="{{item.portrait_url}}" mode="aspectFit" />
     <view class="team-main">
       <view class="section-title">{{item.name}}</view>
+      <view class="team-subtitle">由 {{item.character_name}} 领队</view>
       <view class="muted">当前人数：{{item.member_count}}</view>
       <view class="muted">当前总分：{{item.total_score}}</view>
     </view>

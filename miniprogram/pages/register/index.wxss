@@ -10,6 +10,8 @@
   gap: 22rpx;
   padding: 24rpx;
   margin-bottom: 20rpx;
+  align-items: center;
+  overflow: hidden;
 }
 
 .team-choice-active {
@@ -17,15 +19,33 @@
   transform: translateY(-4rpx);
 }
 
+.team-cirno {
+  background:
+    radial-gradient(circle at top left, rgba(58, 177, 255, 0.18), transparent 35%),
+    rgba(255, 255, 255, 0.94);
+}
+
+.team-daiyousei {
+  background:
+    radial-gradient(circle at top left, rgba(56, 197, 120, 0.18), transparent 35%),
+    rgba(255, 255, 255, 0.94);
+}
+
 .team-image {
-  width: 180rpx;
-  height: 180rpx;
+  width: 220rpx;
+  height: 260rpx;
   border-radius: 24rpx;
   background: linear-gradient(135deg, #d9f6ff 0%, #e8ffe2 100%);
 }
 
 .team-main {
   flex: 1;
+}
+
+.team-subtitle {
+  margin-bottom: 10rpx;
+  color: #2a628f;
+  font-size: 26rpx;
 }
 
 .error-box {

@@ -1,0 +1,574 @@
+{
+  "config": {
+    "_id": "main",
+    "registration_open": true,
+    "action_open": true,
+    "stamina_cap": 3,
+    "default_regen_interval_sec": 300,
+    "buff_regen_interval_sec": 240,
+    "random_event_chance": 0.12,
+    "team_join_max_diff": 10,
+    "updated_at": 0
+  },
+  "teams": [
+    {
+      "_id": "cirno",
+      "name": "琪露诺探索小队",
+      "member_count": 1,
+      "total_score": 0,
+      "portrait_url": "/assets/images/cirno_placeholder.png",
+      "updated_at": 1782355271
+    },
+    {
+      "_id": "daiyousei",
+      "name": "大妖精探索小队",
+      "member_count": 0,
+      "total_score": 0,
+      "portrait_url": "/assets/images/daiyousei_placeholder.png",
+      "updated_at": 1782355271
+    }
+  ],
+  "actions": [
+    {
+      "_id": "cheer",
+      "enabled": true,
+      "name": "为队长加油助威",
+      "description": "向自己的队长挥舞小旗，获得稳定探索进度。",
+      "weight": 100,
+      "stamina_cost": 1,
+      "type": "fixed_gain",
+      "params": {
+        "gain": 40
+      }
+    },
+    {
+      "_id": "slack_off",
+      "enabled": true,
+      "name": "偷偷摸鱼一下，养精蓄锐",
+      "description": "可能小赚一笔，也可能被发现摸鱼。",
+      "weight": 80,
+      "stamina_cost": 1,
+      "type": "random_outcome",
+      "params": {
+        "outcomes": [
+          {
+            "prob": 0.6,
+            "score_delta": 25,
+            "team_delta": 25,
+            "stamina_delta": 0,
+            "text": "你成功摸鱼，精神变好了。"
+          },
+          {
+            "prob": 0.4,
+            "score_delta": -10,
+            "team_delta": -10,
+            "stamina_delta": 1,
+            "text": "你摸鱼失败，但休息了一会儿。"
+          }
+        ]
+      }
+    },
+    {
+      "_id": "sabotage",
+      "enabled": true,
+      "name": "去隔壁队伍捣乱！",
+      "description": "从对方队伍偷走少量探索进度。",
+      "weight": 70,
+      "stamina_cost": 1,
+      "type": "steal",
+      "params": {
+        "amount": 18
+      }
+    },
+    {
+      "_id": "treasure",
+      "enabled": true,
+      "name": "去红魔馆内偷窃财宝！",
+      "description": "大成功会获得很多探索进度，失败也不会完全空手而归。",
+      "weight": 45,
+      "stamina_cost": 1,
+      "type": "random_outcome",
+      "params": {
+        "outcomes": [
+          {
+            "prob": 0.15,
+            "score_delta": 160,
+            "team_delta": 160,
+            "stamina_delta": 0,
+            "text": "你居然真的偷到了宝物。"
+          },
+          {
+            "prob": 0.85,
+            "score_delta": 5,
+            "team_delta": 5,
+            "stamina_delta": 0,
+            "text": "你只捡到了一枚闪闪发亮但没什么用的硬币。"
+          }
+        ]
+      }
+    },
+    {
+      "_id": "marisa_book",
+      "enabled": true,
+      "name": "学习魔理沙偷书！",
+      "description": "高风险高收益的红魔馆图书馆行动。",
+      "weight": 45,
+      "stamina_cost": 1,
+      "type": "random_outcome",
+      "params": {
+        "outcomes": [
+          {
+            "prob": 0.25,
+            "score_delta": 140,
+            "team_delta": 140,
+            "stamina_delta": 0,
+            "text": "你成功带出了一本精美的魔法书。"
+          },
+          {
+            "prob": 0.25,
+            "score_delta": -70,
+            "team_delta": -70,
+            "stamina_delta": 0,
+            "text": "你被帕秋莉抓住并教育了一顿。"
+          },
+          {
+            "prob": 0.5,
+            "score_delta": 20,
+            "team_delta": 20,
+            "stamina_delta": 0,
+            "text": "你没找到魔法书，但记住了一点图书馆路线。"
+          }
+        ]
+      }
+    },
+    {
+      "_id": "meiling_observe",
+      "enabled": true,
+      "name": "观察门卫养精蓄锐之道",
+      "description": "短时间提高体力恢复速度。",
+      "weight": 35,
+      "stamina_cost": 1,
+      "type": "regen_buff",
+      "params": {
+        "score_delta": 10,
+        "team_delta": 10,
+        "buff_duration_sec": 1800,
+        "buff_regen_interval_sec": 240,
+        "non_stackable": true
+      }
+    }
+  ],
+  "randomEvents": [
+    {
+      "_id": "anti_fairy_trap",
+      "enabled": true,
+      "name": "对妖精特攻陷阱",
+      "description": "你掉进了红魔馆专门针对妖精设计的陷阱！",
+      "weight": 25,
+      "type": "score_delta",
+      "params": {
+        "score_delta": -40,
+        "team_delta": -40
+      }
+    },
+    {
+      "_id": "seija_reverse",
+      "enabled": true,
+      "name": "鬼人正邪的反转",
+      "description": "你碰到了鬼人正邪，她反转了你探索进度分数的百位和十位。",
+      "weight": 15,
+      "type": "reverse_digits",
+      "params": {
+        "digits": [
+          "hundreds",
+          "tens"
+        ]
+      }
+    },
+    {
+      "_id": "scarlet_dining",
+      "enabled": true,
+      "name": "红魔馆餐厅",
+      "description": "你误入了红魔馆的餐厅，美美吃了一顿。",
+      "weight": 20,
+      "type": "restore_stamina",
+      "params": {
+        "restore_to_full": true
+      }
+    },
+    {
+      "_id": "marisa_gift",
+      "enabled": true,
+      "name": "魔理沙分书",
+      "description": "你碰到了正在偷书的魔理沙，她分给你一本精美的魔法书。",
+      "weight": 15,
+      "type": "score_percent_gain",
+      "params": {
+        "percent": 0.08,
+        "max_gain": 120
+      }
+    },
+    {
+      "_id": "mystery_tea",
+      "enabled": true,
+      "name": "神秘红茶",
+      "description": "你看到餐厅内有一杯红茶，于是喝了下去。当你醒来时，已经远远落后于大部队了。",
+      "weight": 15,
+      "type": "restore_and_penalty",
+      "params": {
+        "restore_stamina_to_full": true,
+        "score_delta": -80,
+        "team_delta": -80
+      }
+    },
+    {
+      "_id": "meiling_sleep",
+      "enabled": true,
+      "name": "门卫打盹",
+      "description": "你看到门卫正在打盹，接下来的一次行动似乎会更顺利。",
+      "weight": 10,
+      "type": "next_action_bonus",
+      "params": {
+        "bonus": 0.3
+      }
+    }
+  ],
+  "titles": [
+    {
+      "min_score": 0,
+      "title": "刚出发的妖精"
+    },
+    {
+      "min_score": 200,
+      "title": "红魔馆门口观察员"
+    },
+    {
+      "min_score": 500,
+      "title": "湖边巡逻妖精"
+    },
+    {
+      "min_score": 1000,
+      "title": "钟楼探索者"
+    },
+    {
+      "min_score": 1800,
+      "title": "红魔馆潜入高手"
+    },
+    {
+      "min_score": 3000,
+      "title": "宝具传说追寻者"
+    },
+    {
+      "min_score": 5000,
+      "title": "妖精大冒险家"
+    },
+    {
+      "min_score": 8000,
+      "title": "接近最强的妖精"
+    }
+  ],
+  "ticketCodes": [
+    {
+      "_id": "TEST0001",
+      "code": "TEST0001",
+      "status": "bound",
+      "bound_openid": "web_f740343ee6b279e782cbd4a5159d7f7b",
+      "bound_user_id": "user_36f2ce4b2b5075bc24f3c7e28e0e0f71",
+      "created_at": 0,
+      "bound_at": 1782355260
+    },
+    {
+      "_id": "TEST0002",
+      "code": "TEST0002",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0003",
+      "code": "TEST0003",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0004",
+      "code": "TEST0004",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0005",
+      "code": "TEST0005",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0006",
+      "code": "TEST0006",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0007",
+      "code": "TEST0007",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0008",
+      "code": "TEST0008",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0009",
+      "code": "TEST0009",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0010",
+      "code": "TEST0010",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0011",
+      "code": "TEST0011",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0012",
+      "code": "TEST0012",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0013",
+      "code": "TEST0013",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0014",
+      "code": "TEST0014",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0015",
+      "code": "TEST0015",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0016",
+      "code": "TEST0016",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0017",
+      "code": "TEST0017",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0018",
+      "code": "TEST0018",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0019",
+      "code": "TEST0019",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    },
+    {
+      "_id": "TEST0020",
+      "code": "TEST0020",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
+      "created_at": 0,
+      "bound_at": 0
+    }
+  ],
+  "users": [
+    {
+      "_id": "user_36f2ce4b2b5075bc24f3c7e28e0e0f71",
+      "openid": "web_f740343ee6b279e782cbd4a5159d7f7b",
+      "ticket_code": "TEST0001",
+      "display_name": "YMGFC_CN",
+      "team": "cirno",
+      "score": 0,
+      "title": "刚出发的妖精",
+      "stamina": 2,
+      "last_stamina_at": 1782355271,
+      "regen_buff_until": 0,
+      "action_refresh_nonce": 4,
+      "last_action_id": "cheer",
+      "next_action_bonus": 0,
+      "banned": false,
+      "created_at": 1782355260,
+      "updated_at": 1782355271
+    }
+  ],
+  "actionLogs": [
+    {
+      "_id": "log_09272e214fbdb0433f1f9481a0e68c24",
+      "user_id": "user_36f2ce4b2b5075bc24f3c7e28e0e0f71",
+      "openid": "web_f740343ee6b279e782cbd4a5159d7f7b",
+      "team": "cirno",
+      "action_id": "slack_off",
+      "action_name": "偷偷摸鱼一下，养精蓄锐",
+      "score_delta": -10,
+      "team_delta_self": -10,
+      "team_delta_opponent": 0,
+      "stamina_before": 3,
+      "stamina_after": 3,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782355261
+    },
+    {
+      "_id": "log_ddedbcf5934ec0cd8a38a4f97cf391e2",
+      "user_id": "user_36f2ce4b2b5075bc24f3c7e28e0e0f71",
+      "openid": "web_f740343ee6b279e782cbd4a5159d7f7b",
+      "team": "cirno",
+      "action_id": "cheer",
+      "action_name": "为队长加油助威",
+      "score_delta": 40,
+      "team_delta_self": 40,
+      "team_delta_opponent": 0,
+      "stamina_before": 3,
+      "stamina_after": 2,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782355262
+    },
+    {
+      "_id": "log_d7389fa737c93d526cc096d57a3f2372",
+      "user_id": "user_36f2ce4b2b5075bc24f3c7e28e0e0f71",
+      "openid": "web_f740343ee6b279e782cbd4a5159d7f7b",
+      "team": "cirno",
+      "action_id": "marisa_book",
+      "action_name": "学习魔理沙偷书！",
+      "score_delta": 20,
+      "team_delta_self": 20,
+      "team_delta_opponent": 0,
+      "stamina_before": 2,
+      "stamina_after": 3,
+      "random_event_triggered": true,
+      "random_event_id": "mystery_tea",
+      "random_event_result": {
+        "triggered": true,
+        "eventId": "mystery_tea",
+        "name": "神秘红茶",
+        "description": "你看到餐厅内有一杯红茶，于是喝了下去。当你醒来时，已经远远落后于大部队了。",
+        "scoreDelta": -80,
+        "teamDelta": -80,
+        "staminaAfter": 3,
+        "regenBuffUntil": 0,
+        "nextActionBonus": 0
+      },
+      "created_at": 1782355263
+    },
+    {
+      "_id": "log_3d01b4ae8b17ee271bc701a5755a9d51",
+      "user_id": "user_36f2ce4b2b5075bc24f3c7e28e0e0f71",
+      "openid": "web_f740343ee6b279e782cbd4a5159d7f7b",
+      "team": "cirno",
+      "action_id": "cheer",
+      "action_name": "为队长加油助威",
+      "score_delta": 40,
+      "team_delta_self": 40,
+      "team_delta_opponent": 0,
+      "stamina_before": 3,
+      "stamina_after": 2,
+      "random_event_triggered": true,
+      "random_event_id": "anti_fairy_trap",
+      "random_event_result": {
+        "triggered": true,
+        "eventId": "anti_fairy_trap",
+        "name": "对妖精特攻陷阱",
+        "description": "你掉进了红魔馆专门针对妖精设计的陷阱！",
+        "scoreDelta": -40,
+        "teamDelta": -40,
+        "staminaAfter": 2,
+        "regenBuffUntil": 0,
+        "nextActionBonus": 0
+      },
+      "created_at": 1782355271
+    }
+  ],
+  "requestLocks": [
+    "web_f740343ee6b279e782cbd4a5159d7f7b:1782355261422-c81c6b8ad3def",
+    "web_f740343ee6b279e782cbd4a5159d7f7b:1782355262804-f2386ed448a048",
+    "web_f740343ee6b279e782cbd4a5159d7f7b:1782355263659-68fb787d3ee0c",
+    "web_f740343ee6b279e782cbd4a5159d7f7b:1782355271781-2a35a139296518"
+  ],
+  "sessions": {
+    "2a86b624176d76c0afe037db6719e081": {
+      "openid": "web_f740343ee6b279e782cbd4a5159d7f7b",
+      "created_at": 1782355260
+    }
+  }
+}

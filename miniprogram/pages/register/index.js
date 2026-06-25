@@ -1,5 +1,6 @@
 const { callFunction } = require('../../utils/api');
 const { toTeamArray } = require('../../utils/format');
+const { decorateTeams } = require('../../utils/characters');
 
 Page({
   data: {
@@ -25,8 +26,9 @@ Page({
       wx.reLaunch({ url: '/pages/home/index' });
       return;
     }
+
     this.setData({
-      teams: toTeamArray(result.teams),
+      teams: decorateTeams(toTeamArray(result.teams)),
       config: result.config
     });
   },
