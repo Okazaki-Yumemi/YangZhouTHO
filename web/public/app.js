@@ -1,12 +1,6 @@
 const TEAM_META = {
-  cirno: {
-    captain: '琪露诺',
-    image: '/characters/cirno.png'
-  },
-  daiyousei: {
-    captain: '大妖精',
-    image: '/characters/daiyousei.png'
-  }
+  cirno: { captain: '琪露诺', image: '/characters/cirno.png' },
+  daiyousei: { captain: '大妖精', image: '/characters/daiyousei.png' }
 };
 
 const EVENT_META = {
@@ -18,11 +12,12 @@ const EVENT_META = {
   meiling_sleep: { name: '红美铃', image: '/characters/meiling.png' }
 };
 
-const uiState = {
-  selectedTeam: '',
-  current: null
+const TEAM_NAME = {
+  cirno: '琪露诺探索小队',
+  daiyousei: '大妖精探索小队'
 };
 
+const uiState = { selectedTeam: '', current: null };
 const registerView = document.querySelector('#register-view');
 const homeView = document.querySelector('#home-view');
 const ticketInput = document.querySelector('#ticket-code');
@@ -33,13 +28,14 @@ const teamBoard = document.querySelector('#team-board');
 const teamPicks = document.querySelector('#team-picks');
 const recentLogs = document.querySelector('#recent-logs');
 const personalLog = document.querySelector('#personal-log');
+const personalBlock = document.querySelector('#personal-block');
 const actionsGrid = document.querySelector('#actions-grid');
 const resetBtn = document.querySelector('#reset-btn');
 const resultModal = document.querySelector('#result-modal');
 const closeModalBtn = document.querySelector('#close-modal');
 
 function formatSeconds(totalSec) {
-  const value = Math.max(0, totalSec || 0);
+  const value = Math.max(0, Number(totalSec || 0));
   const minutes = Math.floor(value / 60);
   const seconds = value % 60;
   return `${minutes}分${String(seconds).padStart(2, '0')}秒`;
@@ -47,9 +43,7 @@ function formatSeconds(totalSec) {
 
 async function request(path, options = {}) {
   const response = await fetch(path, {
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     ...options
   });
   return response.json();
@@ -57,17 +51,21 @@ async function request(path, options = {}) {
 
 function renderRecentLogs(logs, container) {
   if (!logs.length) {
-    container.innerHTML = '<div class="log-item">还没有行动记录。</div>';
+    container.innerHTML = '<div class="log-item">还没有记录。</div>';
     return;
   }
 
   container.innerHTML = logs
     .map((log) => {
-      const eventText = log.random_event_triggered ? `，触发 ${log.random_event_result.name}` : '';
+      const actionName = log.action_name || '记录';
+      const teamName = TEAM_NAME[log.team] || log.team || '-';
+      const scoreDelta =
+        typeof log.score_delta === 'number' ? `${log.score_delta > 0 ? '+' : ''}${log.score_delta}` : '-';
+
       return `
         <div class="log-item">
-          <strong>${log.action_name || '行动记录'}</strong>
-          <span>${log.team} 阵营 · 个人 ${log.score_delta > 0 ? '+' : ''}${log.score_delta}${eventText}</span>
+          <strong>${actionName}</strong>
+          <span>${teamName} · 个人 ${scoreDelta}</span>
         </div>
       `;
     })
@@ -76,11 +74,12 @@ function renderRecentLogs(logs, container) {
 
 function renderTeams(teamsMap) {
   const teams = Object.values(teamsMap);
+
   teamBoard.innerHTML = teams
     .map((team) => {
       const meta = TEAM_META[team._id];
       return `
-        <article class="team-card">
+        <article class="team-card compact">
           <img src="${meta.image}" alt="${team.name}" />
           <div>
             <p class="eyebrow">领队 ${meta.captain}</p>
@@ -128,30 +127,30 @@ function renderHome(current) {
   if (!current.registered) {
     registerView.classList.remove('hidden');
     homeView.classList.add('hidden');
+    personalBlock.classList.add('hidden');
     return;
   }
 
   registerView.classList.add('hidden');
   homeView.classList.remove('hidden');
+  personalBlock.classList.remove('hidden');
 
   document.querySelector('#user-name').textContent = current.user.display_name;
-  document.querySelector('#user-team').textContent =
-    current.user.team === 'cirno' ? '所属：琪露诺队' : '所属：大妖精队';
-  document.querySelector('#user-stamina').textContent = current.user.stamina;
+  document.querySelector('#user-team').textContent = `所属：${TEAM_NAME[current.user.team] || current.user.team}`;
   document.querySelector('#user-score').textContent = current.user.score;
   document.querySelector('#user-title').textContent = current.user.title;
-  if (current.user.stamina >= current.config.stamina_cap) {
-    document.querySelector('#user-stamina').textContent = `${current.user.stamina} / ${current.config.stamina_cap}（已满）`;
-  } else {
-    document.querySelector('#user-stamina').textContent =
-      `${current.user.stamina} / ${current.config.stamina_cap} · ${formatSeconds(current.user.next_regen_in_sec)}后恢复1点`;
-  }
+  document.querySelector('#user-stamina').textContent =
+    current.user.stamina >= current.config.stamina_cap
+      ? `${current.user.stamina} / ${current.config.stamina_cap}（已满）`
+      : `${current.user.stamina} / ${current.config.stamina_cap} · ${formatSeconds(
+          current.user.next_regen_in_sec
+        )}后恢复1点`;
 
   actionsGrid.innerHTML = current.available_actions
     .map(
       (action) => `
         <article class="action-card">
-          <h4>${action.name}</h4>
+          <h3>${action.name}</h3>
           <p>${action.description}</p>
           <button type="button" data-action="${action._id}">消耗 ${action.stamina_cost} 点体力</button>
         </article>
@@ -168,12 +167,10 @@ function renderHome(current) {
           client_request_id: `${Date.now()}-${Math.random().toString(16).slice(2)}`
         })
       });
-
       if (result.error) {
         alert(result.message);
         return;
       }
-
       openResultModal(result);
       renderHome(result.state);
     });
@@ -186,25 +183,30 @@ function renderHome(current) {
 function openResultModal(result) {
   document.querySelector('#modal-title').textContent = result.action_result.action_name;
   document.querySelector('#modal-copy').textContent = result.action_result.text;
-  document.querySelector('#modal-score').textContent =
-    `个人分数 ${result.action_result.score_delta > 0 ? '+' : ''}${result.action_result.score_delta}`;
-  document.querySelector('#modal-team').textContent =
-    `队伍分数 ${result.action_result.team_delta_self > 0 ? '+' : ''}${result.action_result.team_delta_self}`;
-  document.querySelector('#modal-stamina').textContent =
-    `体力 ${result.action_result.stamina_before} → ${result.action_result.stamina_after}`;
+  document.querySelector('#modal-score').textContent = `个人积分 ${
+    result.action_result.score_delta > 0 ? '+' : ''
+  }${result.action_result.score_delta}`;
+  document.querySelector('#modal-team').textContent = `队伍积分 ${
+    result.action_result.team_delta_self > 0 ? '+' : ''
+  }${result.action_result.team_delta_self}`;
+  document.querySelector('#modal-stamina').textContent = `体力 ${result.action_result.stamina_before} → ${result.action_result.stamina_after}`;
 
   const eventBox = document.querySelector('#event-box');
   if (result.random_event && result.random_event.triggered) {
     const meta = EVENT_META[result.random_event.eventId] || {
-      name: '红魔馆居民',
+      name: '红魔馆住民',
       image: '/characters/remilia.png'
     };
     document.querySelector('#event-image').src = meta.image;
+    document.querySelector('#event-image').alt = meta.name;
     document.querySelector('#event-character').textContent = meta.name;
     document.querySelector('#event-title').textContent = result.random_event.name;
     document.querySelector('#event-description').textContent = result.random_event.description;
-    document.querySelector('#event-effect').textContent =
-      `事件结算：个人 ${result.random_event.scoreDelta > 0 ? '+' : ''}${result.random_event.scoreDelta}，队伍 ${result.random_event.teamDelta > 0 ? '+' : ''}${result.random_event.teamDelta}`;
+    document.querySelector('#event-effect').textContent = `事件结算：个人 ${
+      result.random_event.scoreDelta > 0 ? '+' : ''
+    }${result.random_event.scoreDelta}，队伍 ${
+      result.random_event.teamDelta > 0 ? '+' : ''
+    }${result.random_event.teamDelta}`;
     eventBox.classList.remove('hidden');
   } else {
     eventBox.classList.add('hidden');
@@ -223,13 +225,11 @@ registerBtn.addEventListener('click', async () => {
       display_name: nicknameInput.value.trim()
     })
   });
-
   if (result.error) {
     registerError.textContent = result.message;
     registerError.classList.remove('hidden');
     return;
   }
-
   renderHome(result.state);
 });
 
@@ -241,10 +241,7 @@ resetBtn.addEventListener('click', async () => {
   renderHome(result.state);
 });
 
-closeModalBtn.addEventListener('click', () => {
-  resultModal.classList.add('hidden');
-});
-
+closeModalBtn.addEventListener('click', () => resultModal.classList.add('hidden'));
 resultModal.addEventListener('click', (event) => {
   if (event.target === resultModal) {
     resultModal.classList.add('hidden');

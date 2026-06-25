@@ -4,7 +4,7 @@ const TEAM_IDS = {
 };
 
 const TEAM_FULL_HINT =
-  '这边的探索小队已经太热闹了！为了维持妖精们的公平竞争，请加入另一边的小队吧。';
+  '这边人数已经明显领先了。为了维持阵营平衡，请优先加入另一边的小队。';
 
 const ERROR_CODES = {
   REGISTRATION_CLOSED: 'REGISTRATION_CLOSED',

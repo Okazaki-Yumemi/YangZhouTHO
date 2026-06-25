@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>THO02</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="admin-body">
+    <main class="admin-shell">
+      <section id="admin-login" class="panel admin-login">
+        <div class="field-group">
+          <input id="admin-password" type="password" placeholder="口令" />
+        </div>
+        <p id="admin-login-error" class="error-text hidden"></p>
+        <button id="admin-login-btn" class="primary-btn" type="button">进入</button>
+      </section>
+
+      <section id="admin-app" class="hidden">
+        <div class="admin-grid">
+          <section class="panel">
+            <div id="admin-summary" class="admin-summary"></div>
+          </section>
+
+          <section class="panel">
+            <div class="search-row">
+              <input id="player-search" type="text" placeholder="编号 / 门票码 / 昵称" />
+              <button id="player-search-btn" class="ghost-btn" type="button">搜索</button>
+            </div>
+            <div id="player-results" class="player-results"></div>
+          </section>
+
+          <section class="panel">
+            <h2 id="selected-player-title">未选择</h2>
+            <div id="selected-player-card" class="selected-player empty-state">先选一个玩家。</div>
+          </section>
+
+          <section class="panel">
+            <div class="admin-actions">
+              <div class="admin-action-card">
+                <h3>手动加分</h3>
+                <input id="custom-score" type="number" placeholder="分值" />
+                <input id="custom-reason" type="text" placeholder="备注" />
+                <button data-admin-action="custom_score" class="ghost-btn" type="button">提交</button>
+              </div>
+
+              <div class="admin-action-card">
+                <h3>恢复体力</h3>
+                <input id="restore-reason" type="text" placeholder="备注" />
+                <button data-admin-action="restore_stamina" class="ghost-btn" type="button">回满</button>
+              </div>
+
+              <div class="admin-action-card">
+                <h3>舞台互动</h3>
+                <input id="stage-score" type="number" placeholder="分值" />
+                <input id="stage-reason" type="text" placeholder="备注" />
+                <input id="stage-sticker" type="text" placeholder="贴纸编号" />
+                <button data-admin-action="stage_manual" class="ghost-btn" type="button">提交</button>
+              </div>
+
+              <div class="admin-action-card">
+                <h3>小游戏奖励</h3>
+                <select id="one-time-activity"></select>
+                <input id="one-time-score" type="number" placeholder="分值，不填用默认" />
+                <input id="one-time-sticker" type="text" placeholder="贴纸编号" />
+                <button data-admin-action="one_time_activity" class="ghost-btn" type="button">提交</button>
+              </div>
+
+              <div class="admin-action-card">
+                <h3>摊位奖励</h3>
+                <select id="booth-select"></select>
+                <input id="booth-score" type="number" placeholder="分值，不填用默认" />
+                <input id="booth-sticker" type="text" placeholder="贴纸编号" />
+                <button data-admin-action="booth_reward" class="ghost-btn" type="button">提交</button>
+              </div>
+            </div>
+            <p id="admin-action-message" class="helper-text"></p>
+          </section>
+
+          <section class="panel">
+            <div id="booth-status" class="booth-status"></div>
+          </section>
+
+          <section class="panel">
+            <div id="admin-logs" class="recent-logs"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="/admin.js"></script>
+  </body>
+</html>

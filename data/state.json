@@ -14,26 +14,26 @@
     {
       "_id": "cirno",
       "name": "琪露诺探索小队",
-      "member_count": 1,
+      "member_count": 0,
       "total_score": 0,
-      "portrait_url": "/assets/images/cirno_placeholder.png",
-      "updated_at": 1782355271
+      "portrait_url": "/characters/cirno.png",
+      "updated_at": 1782356933
     },
     {
       "_id": "daiyousei",
       "name": "大妖精探索小队",
-      "member_count": 0,
-      "total_score": 0,
-      "portrait_url": "/assets/images/daiyousei_placeholder.png",
-      "updated_at": 1782355271
+      "member_count": 2,
+      "total_score": 2657,
+      "portrait_url": "/characters/daiyousei.png",
+      "updated_at": 1782356933
     }
   ],
   "actions": [
     {
       "_id": "cheer",
       "enabled": true,
-      "name": "为队长加油助威",
-      "description": "向自己的队长挥舞小旗，获得稳定探索进度。",
+      "name": "为队长摇旗助威",
+      "description": "给自己的阵营加一点稳定推进，适合稳扎稳打。",
       "weight": 100,
       "stamina_cost": 1,
       "type": "fixed_gain",
@@ -44,8 +44,8 @@
     {
       "_id": "slack_off",
       "enabled": true,
-      "name": "偷偷摸鱼一下，养精蓄锐",
-      "description": "可能小赚一笔，也可能被发现摸鱼。",
+      "name": "偷偷摸鱼休息一下",
+      "description": "可能小赚一笔，也可能被抓包，但总归不算白跑。",
       "weight": 80,
       "stamina_cost": 1,
       "type": "random_outcome",
@@ -56,14 +56,14 @@
             "score_delta": 25,
             "team_delta": 25,
             "stamina_delta": 0,
-            "text": "你成功摸鱼，精神变好了。"
+            "text": "你成功摸鱼，状态回来了，还顺手推进了一点探索进度。"
           },
           {
             "prob": 0.4,
             "score_delta": -10,
             "team_delta": -10,
             "stamina_delta": 1,
-            "text": "你摸鱼失败，但休息了一会儿。"
+            "text": "你摸鱼失败被发现了，不过也算歇了一会儿，恢复了些体力。"
           }
         ]
       }
@@ -71,8 +71,8 @@
     {
       "_id": "sabotage",
       "enabled": true,
-      "name": "去隔壁队伍捣乱！",
-      "description": "从对方队伍偷走少量探索进度。",
+      "name": "去隔壁队伍捣乱",
+      "description": "从对方阵营那边顺走一点探索进度。",
       "weight": 70,
       "stamina_cost": 1,
       "type": "steal",
@@ -83,8 +83,8 @@
     {
       "_id": "treasure",
       "enabled": true,
-      "name": "去红魔馆内偷窃财宝！",
-      "description": "大成功会获得很多探索进度，失败也不会完全空手而归。",
+      "name": "去红魔馆里偷宝物",
+      "description": "高风险高回报，运气好能直接起飞。",
       "weight": 45,
       "stamina_cost": 1,
       "type": "random_outcome",
@@ -95,14 +95,14 @@
             "score_delta": 160,
             "team_delta": 160,
             "stamina_delta": 0,
-            "text": "你居然真的偷到了宝物。"
+            "text": "你居然真的带出来了一件红魔馆的宝物，现场一片震惊。"
           },
           {
             "prob": 0.85,
             "score_delta": 5,
             "team_delta": 5,
             "stamina_delta": 0,
-            "text": "你只捡到了一枚闪闪发亮但没什么用的硬币。"
+            "text": "你只捡到了一枚亮闪闪但没什么用的硬币。"
           }
         ]
       }
@@ -110,8 +110,8 @@
     {
       "_id": "marisa_book",
       "enabled": true,
-      "name": "学习魔理沙偷书！",
-      "description": "高风险高收益的红魔馆图书馆行动。",
+      "name": "学魔理沙顺走魔法书",
+      "description": "溜进图书馆碰碰运气，可能学到东西，也可能当场翻车。",
       "weight": 45,
       "stamina_cost": 1,
       "type": "random_outcome",
@@ -122,21 +122,21 @@
             "score_delta": 140,
             "team_delta": 140,
             "stamina_delta": 0,
-            "text": "你成功带出了一本精美的魔法书。"
+            "text": "你成功带出一本精美魔法书，探索进度暴涨。"
           },
           {
             "prob": 0.25,
             "score_delta": -70,
             "team_delta": -70,
             "stamina_delta": 0,
-            "text": "你被帕秋莉抓住并教育了一顿。"
+            "text": "你被帕秋莉逮了个正着，结结实实挨了一顿教育。"
           },
           {
             "prob": 0.5,
             "score_delta": 20,
             "team_delta": 20,
             "stamina_delta": 0,
-            "text": "你没找到魔法书，但记住了一点图书馆路线。"
+            "text": "你没拿到书，但记住了图书馆的路线，也不算白来。"
           }
         ]
       }
@@ -144,8 +144,8 @@
     {
       "_id": "meiling_observe",
       "enabled": true,
-      "name": "观察门卫养精蓄锐之道",
-      "description": "短时间提高体力恢复速度。",
+      "name": "观察美铃的养生之道",
+      "description": "短时间内提高体力恢复速度，适合为后续行动做准备。",
       "weight": 35,
       "stamina_cost": 1,
       "type": "regen_buff",
@@ -163,7 +163,7 @@
       "_id": "anti_fairy_trap",
       "enabled": true,
       "name": "对妖精特攻陷阱",
-      "description": "你掉进了红魔馆专门针对妖精设计的陷阱！",
+      "description": "你掉进了红魔馆专门针对妖精设计的恶作剧陷阱。",
       "weight": 25,
       "type": "score_delta",
       "params": {
@@ -174,8 +174,8 @@
     {
       "_id": "seija_reverse",
       "enabled": true,
-      "name": "鬼人正邪的反转",
-      "description": "你碰到了鬼人正邪，她反转了你探索进度分数的百位和十位。",
+      "name": "正邪的反转把戏",
+      "description": "鬼人正邪路过，顺手把你这次结算的高位数字反转了一下。",
       "weight": 15,
       "type": "reverse_digits",
       "params": {
@@ -188,8 +188,8 @@
     {
       "_id": "scarlet_dining",
       "enabled": true,
-      "name": "红魔馆餐厅",
-      "description": "你误入了红魔馆的餐厅，美美吃了一顿。",
+      "name": "误入红魔馆餐厅",
+      "description": "你闻着香味摸进了餐厅，吃得太满足，体力直接回满。",
       "weight": 20,
       "type": "restore_stamina",
       "params": {
@@ -199,8 +199,8 @@
     {
       "_id": "marisa_gift",
       "enabled": true,
-      "name": "魔理沙分书",
-      "description": "你碰到了正在偷书的魔理沙，她分给你一本精美的魔法书。",
+      "name": "魔理沙分你一本书",
+      "description": "你撞见了正在行动的魔理沙，她心情不错，分了你一点成果。",
       "weight": 15,
       "type": "score_percent_gain",
       "params": {
@@ -212,7 +212,7 @@
       "_id": "mystery_tea",
       "enabled": true,
       "name": "神秘红茶",
-      "description": "你看到餐厅内有一杯红茶，于是喝了下去。当你醒来时，已经远远落后于大部队了。",
+      "description": "你喝下了一杯不该碰的红茶，醒来时精神满了，但队伍进度已经落后。",
       "weight": 15,
       "type": "restore_and_penalty",
       "params": {
@@ -225,7 +225,7 @@
       "_id": "meiling_sleep",
       "enabled": true,
       "name": "门卫打盹",
-      "description": "你看到门卫正在打盹，接下来的一次行动似乎会更顺利。",
+      "description": "你发现美铃正在打盹，下一次行动看起来会顺利很多。",
       "weight": 10,
       "type": "next_action_bonus",
       "params": {
@@ -272,19 +272,19 @@
       "_id": "TEST0001",
       "code": "TEST0001",
       "status": "bound",
-      "bound_openid": "web_f740343ee6b279e782cbd4a5159d7f7b",
-      "bound_user_id": "user_36f2ce4b2b5075bc24f3c7e28e0e0f71",
+      "bound_openid": "web_9b19444327c6d511b67da188cf8e10c5",
+      "bound_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
       "created_at": 0,
-      "bound_at": 1782355260
+      "bound_at": 1782356146
     },
     {
       "_id": "TEST0002",
       "code": "TEST0002",
-      "status": "unused",
-      "bound_openid": "",
-      "bound_user_id": "",
+      "status": "bound",
+      "bound_openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "bound_user_id": "user_494709dd27180e1ba81d71e156bd87e0",
       "created_at": 0,
-      "bound_at": 0
+      "bound_at": 1782356726
     },
     {
       "_id": "TEST0003",
@@ -451,32 +451,453 @@
   ],
   "users": [
     {
-      "_id": "user_36f2ce4b2b5075bc24f3c7e28e0e0f71",
-      "openid": "web_f740343ee6b279e782cbd4a5159d7f7b",
+      "_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "openid": "web_9b19444327c6d511b67da188cf8e10c5",
       "ticket_code": "TEST0001",
-      "display_name": "YMGFC_CN",
-      "team": "cirno",
-      "score": 0,
-      "title": "刚出发的妖精",
-      "stamina": 2,
-      "last_stamina_at": 1782355271,
+      "display_name": "????A",
+      "team": "daiyousei",
+      "score": 2047,
+      "title": "红魔馆潜入高手",
+      "stamina": 3,
+      "last_stamina_at": 1782356146,
       "regen_buff_until": 0,
-      "action_refresh_nonce": 4,
-      "last_action_id": "cheer",
+      "action_refresh_nonce": 0,
+      "last_action_id": "",
       "next_action_bonus": 0,
       "banned": false,
-      "created_at": 1782355260,
-      "updated_at": 1782355271
+      "one_time_claims": [],
+      "booth_claims": [],
+      "created_at": 1782356146,
+      "updated_at": 1782356666
+    },
+    {
+      "_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "ticket_code": "TEST0002",
+      "display_name": "YMGFC_CN",
+      "team": "daiyousei",
+      "score": 620,
+      "title": "湖边巡逻妖精",
+      "stamina": 3,
+      "last_stamina_at": 1782356933,
+      "regen_buff_until": 1782358704,
+      "action_refresh_nonce": 25,
+      "last_action_id": "slack_off",
+      "next_action_bonus": 0,
+      "banned": false,
+      "one_time_claims": [],
+      "booth_claims": [],
+      "created_at": 1782356726,
+      "updated_at": 1782356933
     }
   ],
   "actionLogs": [
     {
-      "_id": "log_09272e214fbdb0433f1f9481a0e68c24",
-      "user_id": "user_36f2ce4b2b5075bc24f3c7e28e0e0f71",
-      "openid": "web_f740343ee6b279e782cbd4a5159d7f7b",
-      "team": "cirno",
+      "_id": "log_c41b2cb1250af14a2fba83798e73b4cc",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "marisa_book",
+      "action_name": "学魔理沙顺走魔法书",
+      "score_delta": 20,
+      "team_delta_self": 20,
+      "team_delta_opponent": 0,
+      "stamina_before": 3,
+      "stamina_after": 2,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356729
+    },
+    {
+      "_id": "log_48f7cd7738bb22a57c8a72c92c80ba58",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "cheer",
+      "action_name": "为队长摇旗助威",
+      "score_delta": 40,
+      "team_delta_self": 40,
+      "team_delta_opponent": 0,
+      "stamina_before": 2,
+      "stamina_after": 1,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356730
+    },
+    {
+      "_id": "log_d3ca1576aa27245091c5cbb24e82ddef",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "sabotage",
+      "action_name": "去隔壁队伍捣乱",
+      "score_delta": 0,
+      "team_delta_self": 0,
+      "team_delta_opponent": 0,
+      "stamina_before": 1,
+      "stamina_after": 0,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356730
+    },
+    {
+      "_id": "log_803b64c6ca8c6d43192ac5c40568a53b",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "marisa_book",
+      "action_name": "学魔理沙顺走魔法书",
+      "score_delta": -70,
+      "team_delta_self": -70,
+      "team_delta_opponent": 0,
+      "stamina_before": 3,
+      "stamina_after": 2,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356763
+    },
+    {
+      "_id": "log_26b44fa28f24e54a6f54fa336f8a2cd0",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "cheer",
+      "action_name": "为队长摇旗助威",
+      "score_delta": 40,
+      "team_delta_self": 40,
+      "team_delta_opponent": 0,
+      "stamina_before": 2,
+      "stamina_after": 1,
+      "random_event_triggered": true,
+      "random_event_id": "anti_fairy_trap",
+      "random_event_result": {
+        "triggered": true,
+        "eventId": "anti_fairy_trap",
+        "name": "对妖精特攻陷阱",
+        "description": "你掉进了红魔馆专门针对妖精设计的恶作剧陷阱。",
+        "scoreDelta": -40,
+        "teamDelta": -40,
+        "staminaAfter": 1,
+        "regenBuffUntil": 0,
+        "nextActionBonus": 0
+      },
+      "created_at": 1782356765
+    },
+    {
+      "_id": "log_7327f1df9fc68049bbf77234a5ea5ff7",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
       "action_id": "slack_off",
-      "action_name": "偷偷摸鱼一下，养精蓄锐",
+      "action_name": "偷偷摸鱼休息一下",
+      "score_delta": 25,
+      "team_delta_self": 25,
+      "team_delta_opponent": 0,
+      "stamina_before": 1,
+      "stamina_after": 0,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356774
+    },
+    {
+      "_id": "log_a761590f42e064f803f9287ffd89e5fe",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "sabotage",
+      "action_name": "去隔壁队伍捣乱",
+      "score_delta": 0,
+      "team_delta_self": 0,
+      "team_delta_opponent": 0,
+      "stamina_before": 3,
+      "stamina_after": 2,
+      "random_event_triggered": true,
+      "random_event_id": "seija_reverse",
+      "random_event_result": {
+        "triggered": true,
+        "eventId": "seija_reverse",
+        "name": "正邪的反转把戏",
+        "description": "鬼人正邪路过，顺手把你这次结算的高位数字反转了一下。",
+        "scoreDelta": 0,
+        "teamDelta": 0,
+        "staminaAfter": 2,
+        "regenBuffUntil": 0,
+        "nextActionBonus": 0
+      },
+      "created_at": 1782356780
+    },
+    {
+      "_id": "log_061198a067b4a6d3300bb914ef014f94",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "treasure",
+      "action_name": "去红魔馆里偷宝物",
+      "score_delta": 5,
+      "team_delta_self": 5,
+      "team_delta_opponent": 0,
+      "stamina_before": 2,
+      "stamina_after": 1,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356827
+    },
+    {
+      "_id": "log_fb63460b1f3e53c85c92b638151c1640",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "marisa_book",
+      "action_name": "学魔理沙顺走魔法书",
+      "score_delta": 140,
+      "team_delta_self": 140,
+      "team_delta_opponent": 0,
+      "stamina_before": 1,
+      "stamina_after": 0,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356831
+    },
+    {
+      "_id": "log_002b9435b14e95849f329d6b86ba493e",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "meiling_observe",
+      "action_name": "观察美铃的养生之道",
+      "score_delta": 10,
+      "team_delta_self": 10,
+      "team_delta_opponent": 0,
+      "stamina_before": 3,
+      "stamina_after": 2,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356904
+    },
+    {
+      "_id": "log_a6b68bb8b0ae19d18394200afedd97e9",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "marisa_book",
+      "action_name": "学魔理沙顺走魔法书",
+      "score_delta": 20,
+      "team_delta_self": 20,
+      "team_delta_opponent": 0,
+      "stamina_before": 2,
+      "stamina_after": 1,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356905
+    },
+    {
+      "_id": "log_f55838e711ec107615ab66b3e5f3f841",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "sabotage",
+      "action_name": "去隔壁队伍捣乱",
+      "score_delta": 0,
+      "team_delta_self": 0,
+      "team_delta_opponent": 0,
+      "stamina_before": 1,
+      "stamina_after": 0,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356905
+    },
+    {
+      "_id": "log_e7eb0a8fa562ce42af06492fd620d13f",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "cheer",
+      "action_name": "为队长摇旗助威",
+      "score_delta": 40,
+      "team_delta_self": 40,
+      "team_delta_opponent": 0,
+      "stamina_before": 3,
+      "stamina_after": 2,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356911
+    },
+    {
+      "_id": "log_31be0eba006745b7d03df1674eade60c",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "treasure",
+      "action_name": "去红魔馆里偷宝物",
+      "score_delta": 5,
+      "team_delta_self": 5,
+      "team_delta_opponent": 0,
+      "stamina_before": 2,
+      "stamina_after": 1,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356912
+    },
+    {
+      "_id": "log_37c24f24216ac4e4c49629f5f78c2225",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "cheer",
+      "action_name": "为队长摇旗助威",
+      "score_delta": 40,
+      "team_delta_self": 40,
+      "team_delta_opponent": 0,
+      "stamina_before": 1,
+      "stamina_after": 0,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356913
+    },
+    {
+      "_id": "log_2c01f3fad5d1f4d37de46a0187b84896",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "sabotage",
+      "action_name": "去隔壁队伍捣乱",
+      "score_delta": 0,
+      "team_delta_self": 0,
+      "team_delta_opponent": 0,
+      "stamina_before": 3,
+      "stamina_after": 2,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356916
+    },
+    {
+      "_id": "log_c5461516d25fa7419becd6d303a58e1f",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "marisa_book",
+      "action_name": "学魔理沙顺走魔法书",
+      "score_delta": 140,
+      "team_delta_self": 140,
+      "team_delta_opponent": 0,
+      "stamina_before": 2,
+      "stamina_after": 1,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356917
+    },
+    {
+      "_id": "log_9b5d884d411a58dda6b51bdb64159187",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "slack_off",
+      "action_name": "偷偷摸鱼休息一下",
+      "score_delta": 25,
+      "team_delta_self": 25,
+      "team_delta_opponent": 0,
+      "stamina_before": 1,
+      "stamina_after": 0,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356918
+    },
+    {
+      "_id": "log_1de87f3953a0ab5acc471948c3ab4dfc",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "cheer",
+      "action_name": "为队长摇旗助威",
+      "score_delta": 40,
+      "team_delta_self": 40,
+      "team_delta_opponent": 0,
+      "stamina_before": 3,
+      "stamina_after": 2,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356921
+    },
+    {
+      "_id": "log_e953eb9fd282c8e016577f1a8a1c8371",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "sabotage",
+      "action_name": "去隔壁队伍捣乱",
+      "score_delta": 0,
+      "team_delta_self": 0,
+      "team_delta_opponent": 0,
+      "stamina_before": 2,
+      "stamina_after": 1,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356922
+    },
+    {
+      "_id": "log_aa86bd1bc6d7f6399d981a577782a906",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "meiling_observe",
+      "action_name": "观察美铃的养生之道",
+      "score_delta": 10,
+      "team_delta_self": 10,
+      "team_delta_opponent": 0,
+      "stamina_before": 1,
+      "stamina_after": 0,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356923
+    },
+    {
+      "_id": "log_c5a96bf0a1626bf117bbd0f5fa707d44",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "slack_off",
+      "action_name": "偷偷摸鱼休息一下",
       "score_delta": -10,
       "team_delta_self": -10,
       "team_delta_opponent": 0,
@@ -485,90 +906,822 @@
       "random_event_triggered": false,
       "random_event_id": "",
       "random_event_result": null,
-      "created_at": 1782355261
+      "created_at": 1782356926
     },
     {
-      "_id": "log_ddedbcf5934ec0cd8a38a4f97cf391e2",
-      "user_id": "user_36f2ce4b2b5075bc24f3c7e28e0e0f71",
-      "openid": "web_f740343ee6b279e782cbd4a5159d7f7b",
-      "team": "cirno",
-      "action_id": "cheer",
-      "action_name": "为队长加油助威",
-      "score_delta": 40,
-      "team_delta_self": 40,
+      "_id": "log_6874a28cb9244eddbc6aba395b4bdaa0",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "marisa_book",
+      "action_name": "学魔理沙顺走魔法书",
+      "score_delta": 140,
+      "team_delta_self": 140,
       "team_delta_opponent": 0,
       "stamina_before": 3,
       "stamina_after": 2,
       "random_event_triggered": false,
       "random_event_id": "",
       "random_event_result": null,
-      "created_at": 1782355262
+      "created_at": 1782356927
     },
     {
-      "_id": "log_d7389fa737c93d526cc096d57a3f2372",
-      "user_id": "user_36f2ce4b2b5075bc24f3c7e28e0e0f71",
-      "openid": "web_f740343ee6b279e782cbd4a5159d7f7b",
-      "team": "cirno",
-      "action_id": "marisa_book",
-      "action_name": "学习魔理沙偷书！",
-      "score_delta": 20,
-      "team_delta_self": 20,
-      "team_delta_opponent": 0,
-      "stamina_before": 2,
-      "stamina_after": 3,
-      "random_event_triggered": true,
-      "random_event_id": "mystery_tea",
-      "random_event_result": {
-        "triggered": true,
-        "eventId": "mystery_tea",
-        "name": "神秘红茶",
-        "description": "你看到餐厅内有一杯红茶，于是喝了下去。当你醒来时，已经远远落后于大部队了。",
-        "scoreDelta": -80,
-        "teamDelta": -80,
-        "staminaAfter": 3,
-        "regenBuffUntil": 0,
-        "nextActionBonus": 0
-      },
-      "created_at": 1782355263
-    },
-    {
-      "_id": "log_3d01b4ae8b17ee271bc701a5755a9d51",
-      "user_id": "user_36f2ce4b2b5075bc24f3c7e28e0e0f71",
-      "openid": "web_f740343ee6b279e782cbd4a5159d7f7b",
-      "team": "cirno",
+      "_id": "log_113540472ed3bb93ced27fcef9c36aa8",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
       "action_id": "cheer",
-      "action_name": "为队长加油助威",
+      "action_name": "为队长摇旗助威",
       "score_delta": 40,
       "team_delta_self": 40,
       "team_delta_opponent": 0,
+      "stamina_before": 2,
+      "stamina_after": 1,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782356930
+    },
+    {
+      "_id": "log_95af185ef91386d32fd3d00b4c4c6e0e",
+      "kind": "action",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "team": "daiyousei",
+      "action_id": "slack_off",
+      "action_name": "偷偷摸鱼休息一下",
+      "score_delta": -10,
+      "team_delta_self": -10,
+      "team_delta_opponent": 0,
       "stamina_before": 3,
-      "stamina_after": 2,
+      "stamina_after": 3,
       "random_event_triggered": true,
       "random_event_id": "anti_fairy_trap",
       "random_event_result": {
         "triggered": true,
         "eventId": "anti_fairy_trap",
         "name": "对妖精特攻陷阱",
-        "description": "你掉进了红魔馆专门针对妖精设计的陷阱！",
+        "description": "你掉进了红魔馆专门针对妖精设计的恶作剧陷阱。",
         "scoreDelta": -40,
         "teamDelta": -40,
-        "staminaAfter": 2,
-        "regenBuffUntil": 0,
+        "staminaAfter": 3,
+        "regenBuffUntil": 1782358704,
         "nextActionBonus": 0
       },
-      "created_at": 1782355271
+      "created_at": 1782356933
+    }
+  ],
+  "grantLogs": [
+    {
+      "_id": "grant_3171e6bf86b8b9e2fe53b06914d72ee8",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "????",
+      "score_delta": 7,
+      "created_at": 1782356146,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_4481ed6057156c2c604bb67d7704f6ab",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "????",
+      "score_delta": 0,
+      "created_at": 1782356146,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_c7694746a8ec761ee99c07aebda81fae",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "手动加分",
+      "score_delta": 120,
+      "created_at": 1782356662,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_5ea0fbd7672eb7e4bf6e2172b99ba151",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "手动加分",
+      "score_delta": 120,
+      "created_at": 1782356663,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_8f2558dcfa54356a88cc1b8c57991c9f",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "手动加分",
+      "score_delta": 120,
+      "created_at": 1782356663,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_abb0de99cffe8e414d2348d0490978ed",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "手动加分",
+      "score_delta": 120,
+      "created_at": 1782356663,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_5f0d6cae6ffa4e863bf7c45ba61e3126",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "手动加分",
+      "score_delta": 120,
+      "created_at": 1782356664,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_7e03b4a09fbc6716bdc1b1343632f74b",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "手动加分",
+      "score_delta": 120,
+      "created_at": 1782356664,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_9cdee8f7aa5eb4d474f05cf8ad198d0e",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "手动加分",
+      "score_delta": 120,
+      "created_at": 1782356664,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_6b3ddec9a318e65493fedfc35faff54e",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "手动加分",
+      "score_delta": 120,
+      "created_at": 1782356664,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_f2368ca3a8535e6ac845d267097b29c8",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "手动加分",
+      "score_delta": 120,
+      "created_at": 1782356664,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_182f1092ec01e8402cc2150e644b3f50",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "手动加分",
+      "score_delta": 120,
+      "created_at": 1782356665,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_6a10b2fb82d91c3a8d52955b028ef80a",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "手动加分",
+      "score_delta": 120,
+      "created_at": 1782356665,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_908b4be981e6f8b0e68ee752aaad5586",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "手动加分",
+      "score_delta": 120,
+      "created_at": 1782356665,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_a42504b9aa7d49525c48a052d7755204",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "手动加分",
+      "score_delta": 120,
+      "created_at": 1782356665,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_09407f7f75061e8f2420971380a4abe9",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "手动加分",
+      "score_delta": 120,
+      "created_at": 1782356665,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_2930c3ef6470c2fbd56bf922d0e9f713",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "手动加分",
+      "score_delta": 120,
+      "created_at": 1782356665,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_0b34e12fb53015c4671334515e49cebc",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "手动加分",
+      "score_delta": 120,
+      "created_at": 1782356666,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_bf765ed254e6a086270458a9f67f8527",
+      "kind": "grant",
+      "user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+      "team": "daiyousei",
+      "action_name": "手动加分",
+      "score_delta": 120,
+      "created_at": 1782356666,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_c6175d5beb48370d79cd4a70967728fe",
+      "kind": "grant",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "team": "daiyousei",
+      "action_name": "1000",
+      "score_delta": 0,
+      "created_at": 1782356758,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_f1e35e31b34761ce92c9a24895394aad",
+      "kind": "grant",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "team": "daiyousei",
+      "action_name": "1000",
+      "score_delta": 0,
+      "created_at": 1782356759,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_2a22d882bd8442d63ae3d533a53bd91d",
+      "kind": "grant",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "team": "daiyousei",
+      "action_name": "1000",
+      "score_delta": 0,
+      "created_at": 1782356760,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_4950b7d4bd7f45ef8d6ad6de55b68d59",
+      "kind": "grant",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "team": "daiyousei",
+      "action_name": "1000",
+      "score_delta": 0,
+      "created_at": 1782356777,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_815d8befe977b885ee0575204ec17f0c",
+      "kind": "grant",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "team": "daiyousei",
+      "action_name": "管理员恢复体力",
+      "score_delta": 0,
+      "created_at": 1782356899,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_e9861ae04a934052980219fd92049fda",
+      "kind": "grant",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "team": "daiyousei",
+      "action_name": "管理员恢复体力",
+      "score_delta": 0,
+      "created_at": 1782356909,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_3fa8bb9a0d2f90d43ab872611704beec",
+      "kind": "grant",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "team": "daiyousei",
+      "action_name": "管理员恢复体力",
+      "score_delta": 0,
+      "created_at": 1782356915,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_4d5c97580e6c40751c1e0f02ef1d8782",
+      "kind": "grant",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "team": "daiyousei",
+      "action_name": "管理员恢复体力",
+      "score_delta": 0,
+      "created_at": 1782356920,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_6e72a2437518b4666d33214462b2c20b",
+      "kind": "grant",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "team": "daiyousei",
+      "action_name": "管理员恢复体力",
+      "score_delta": 0,
+      "created_at": 1782356925,
+      "random_event_triggered": false,
+      "random_event_result": null
+    },
+    {
+      "_id": "grant_73410ba0bf9da1ba4a4f55394ab49223",
+      "kind": "grant",
+      "user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+      "team": "daiyousei",
+      "action_name": "管理员恢复体力",
+      "score_delta": 0,
+      "created_at": 1782356932,
+      "random_event_triggered": false,
+      "random_event_result": null
     }
   ],
   "requestLocks": [
-    "web_f740343ee6b279e782cbd4a5159d7f7b:1782355261422-c81c6b8ad3def",
-    "web_f740343ee6b279e782cbd4a5159d7f7b:1782355262804-f2386ed448a048",
-    "web_f740343ee6b279e782cbd4a5159d7f7b:1782355263659-68fb787d3ee0c",
-    "web_f740343ee6b279e782cbd4a5159d7f7b:1782355271781-2a35a139296518"
+    "web_c59914884dc0f47bf44d118518cf9570:1782356729089-e83cf0f523d7e8",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356730068-62febbbded4138",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356730718-a4f63a2b9a9188",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356763849-a4074a8ed80eb",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356765132-3299bfc0ac63b8",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356774061-8e4ca000939ed",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356780554-b4cac38bc63cb8",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356827628-d456f694fb4658",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356831208-9a2c7efbdb47f8",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356904234-11031cf100df48",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356905140-076fe10d9cb3a",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356905946-f752b7fa748648",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356911755-66096244e7edd8",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356912701-57ec1b643a2d78",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356913417-40de5ce257aa78",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356916692-237b5c8aeb5b",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356917901-8ece81275b209",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356918683-660271f19f07f",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356921830-8510c13449c4e",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356922723-706739591320d8",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356923884-ce7c84b81fce5",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356926855-fa8519c720c27",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356927792-e6dcc474288ab",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356930451-2132f171b98478",
+    "web_c59914884dc0f47bf44d118518cf9570:1782356933519-8373e311b4d1f"
   ],
   "sessions": {
-    "2a86b624176d76c0afe037db6719e081": {
-      "openid": "web_f740343ee6b279e782cbd4a5159d7f7b",
-      "created_at": 1782355260
+    "f0f0a1b4428160add70412ad5c494044": {
+      "openid": "web_9b19444327c6d511b67da188cf8e10c5",
+      "created_at": 1782356146
+    },
+    "3d8021a0ae087a597cccbd340a9316ef": {
+      "openid": "web_9d871e96827cf0c03efca75dd6d4d750",
+      "created_at": 1782356146
+    },
+    "306d1b15c1e65083656e4ba7c1816f06": {
+      "openid": "web_59d395e808872f9b3e84437c3371e1a0",
+      "created_at": 1782356146
+    },
+    "a71648d4710082eacecc2557bb049f1b": {
+      "openid": "web_f2d06c53aac95c09e10340235b05aa9e",
+      "created_at": 1782356219
+    },
+    "8e2d0f59a872d142eec4cbbb930367bd": {
+      "openid": "web_c59914884dc0f47bf44d118518cf9570",
+      "created_at": 1782356517
+    },
+    "0cbf8101c330eb99e65738333e88ea84": {
+      "openid": "web_d24560762a4b0c8735207a3ad8e8e4ea",
+      "created_at": 1782356607
+    },
+    "3af89d3f7334a48999474d4493aef615": {
+      "openid": "web_0590098504fd0d2be51e8721ff046e8d",
+      "created_at": 1782356607
+    },
+    "b9edb3c8b407c36d336a7b7612982a6a": {
+      "openid": "web_bcabc341a6571a7d2f24ae8ddd45e4af",
+      "created_at": 1782356643
     }
+  },
+  "admin": {
+    "password": "THOADMIN",
+    "sessions": {
+      "da669806276f9afdbcaace58c7c6ee17": {
+        "created_at": 1782356146
+      },
+      "eba50c3dfe6222cb5339a6baadd779e0": {
+        "created_at": 1782356652
+      }
+    },
+    "oneTimeActivities": [
+      {
+        "id": "stage_game_a",
+        "name": "舞台小游戏 A",
+        "score": 1
+      },
+      {
+        "id": "stage_game_b",
+        "name": "舞台小游戏 B",
+        "score": 1
+      },
+      {
+        "id": "stage_game_c",
+        "name": "舞台小游戏 C",
+        "score": 1
+      }
+    ],
+    "boothCampaigns": [
+      {
+        "id": "booth_food",
+        "name": "小吃摊位",
+        "remaining_slots": 3,
+        "score": 2
+      },
+      {
+        "id": "booth_drink",
+        "name": "饮品摊位",
+        "remaining_slots": 3,
+        "score": 2
+      },
+      {
+        "id": "booth_goods",
+        "name": "周边摊位",
+        "remaining_slots": 3,
+        "score": 2
+      }
+    ],
+    "logs": [
+      {
+        "_id": "admin_20a4fa3a7b965f8de2554a0724174425",
+        "action": "custom_score",
+        "detail": {
+          "label": "????",
+          "score_delta": 7,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356146
+      },
+      {
+        "_id": "admin_30b15947dafd655e389447dc84e7f10d",
+        "action": "restore_stamina",
+        "detail": {
+          "label": "????",
+          "score_delta": 0,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356146
+      },
+      {
+        "_id": "admin_6cbe4476ceafc3505b73f1ad4faeaa23",
+        "action": "custom_score",
+        "detail": {
+          "label": "手动加分",
+          "score_delta": 120,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356662
+      },
+      {
+        "_id": "admin_72db7068da7e0e184e8e6a4e9d8adff6",
+        "action": "custom_score",
+        "detail": {
+          "label": "手动加分",
+          "score_delta": 120,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356663
+      },
+      {
+        "_id": "admin_6c0b15584b864c76fd024564e08a8c88",
+        "action": "custom_score",
+        "detail": {
+          "label": "手动加分",
+          "score_delta": 120,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356663
+      },
+      {
+        "_id": "admin_25f0d9fa7258a8bfee1931903b28748f",
+        "action": "custom_score",
+        "detail": {
+          "label": "手动加分",
+          "score_delta": 120,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356663
+      },
+      {
+        "_id": "admin_2f42a705511841fcafc507013a3ed6d6",
+        "action": "custom_score",
+        "detail": {
+          "label": "手动加分",
+          "score_delta": 120,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356664
+      },
+      {
+        "_id": "admin_7c50211fd377ca25e1bed4335de1b4b3",
+        "action": "custom_score",
+        "detail": {
+          "label": "手动加分",
+          "score_delta": 120,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356664
+      },
+      {
+        "_id": "admin_24dd7b8149dee31236091c6b3d33b64d",
+        "action": "custom_score",
+        "detail": {
+          "label": "手动加分",
+          "score_delta": 120,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356664
+      },
+      {
+        "_id": "admin_9a1e7c1335a943a62f68a11ae8a14fa4",
+        "action": "custom_score",
+        "detail": {
+          "label": "手动加分",
+          "score_delta": 120,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356664
+      },
+      {
+        "_id": "admin_1383fe72e457a650410446b24c888e5b",
+        "action": "custom_score",
+        "detail": {
+          "label": "手动加分",
+          "score_delta": 120,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356664
+      },
+      {
+        "_id": "admin_2fad55497e77d9a6cf18f71e05dfa47d",
+        "action": "custom_score",
+        "detail": {
+          "label": "手动加分",
+          "score_delta": 120,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356665
+      },
+      {
+        "_id": "admin_338ff9b67ed246b34ecb87cdab17bef2",
+        "action": "custom_score",
+        "detail": {
+          "label": "手动加分",
+          "score_delta": 120,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356665
+      },
+      {
+        "_id": "admin_b2e44aaeb48c4a302a69de66561b9a22",
+        "action": "custom_score",
+        "detail": {
+          "label": "手动加分",
+          "score_delta": 120,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356665
+      },
+      {
+        "_id": "admin_a7a8624887d3bcd2ce723ca47195588d",
+        "action": "custom_score",
+        "detail": {
+          "label": "手动加分",
+          "score_delta": 120,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356665
+      },
+      {
+        "_id": "admin_97dad380b52e5b5e24429e0c70185a99",
+        "action": "custom_score",
+        "detail": {
+          "label": "手动加分",
+          "score_delta": 120,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356665
+      },
+      {
+        "_id": "admin_c2386a15d3e698aa33ad2153e2af14c7",
+        "action": "custom_score",
+        "detail": {
+          "label": "手动加分",
+          "score_delta": 120,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356665
+      },
+      {
+        "_id": "admin_67e582a95f5285deb458d87449d57858",
+        "action": "custom_score",
+        "detail": {
+          "label": "手动加分",
+          "score_delta": 120,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356666
+      },
+      {
+        "_id": "admin_d1704678432046dbc085cccc9a3679af",
+        "action": "custom_score",
+        "detail": {
+          "label": "手动加分",
+          "score_delta": 120,
+          "target_user_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
+          "target_display_name": "????A"
+        },
+        "created_at": 1782356666
+      },
+      {
+        "_id": "admin_bf910fb57bc32c7b68b397fbccc0bacc",
+        "action": "restore_stamina",
+        "detail": {
+          "label": "1000",
+          "score_delta": 0,
+          "target_user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+          "target_display_name": "YMGFC_CN"
+        },
+        "created_at": 1782356758
+      },
+      {
+        "_id": "admin_906b7b57acf05801c8964b6620ae68bc",
+        "action": "restore_stamina",
+        "detail": {
+          "label": "1000",
+          "score_delta": 0,
+          "target_user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+          "target_display_name": "YMGFC_CN"
+        },
+        "created_at": 1782356759
+      },
+      {
+        "_id": "admin_aec1f3bb41ea87a8a356b54cb6363af1",
+        "action": "restore_stamina",
+        "detail": {
+          "label": "1000",
+          "score_delta": 0,
+          "target_user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+          "target_display_name": "YMGFC_CN"
+        },
+        "created_at": 1782356760
+      },
+      {
+        "_id": "admin_cccc27e90de3bd5217a7228a434eb65b",
+        "action": "restore_stamina",
+        "detail": {
+          "label": "1000",
+          "score_delta": 0,
+          "target_user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+          "target_display_name": "YMGFC_CN"
+        },
+        "created_at": 1782356777
+      },
+      {
+        "_id": "admin_7000cd06266b8f60e8eacf3862366ac1",
+        "action": "restore_stamina",
+        "detail": {
+          "label": "管理员恢复体力",
+          "score_delta": 0,
+          "target_user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+          "target_display_name": "YMGFC_CN"
+        },
+        "created_at": 1782356899
+      },
+      {
+        "_id": "admin_e08fa4d1771606d4f873cb849ac3937a",
+        "action": "restore_stamina",
+        "detail": {
+          "label": "管理员恢复体力",
+          "score_delta": 0,
+          "target_user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+          "target_display_name": "YMGFC_CN"
+        },
+        "created_at": 1782356909
+      },
+      {
+        "_id": "admin_6ed7622e3be965a7eef699b92076adf7",
+        "action": "restore_stamina",
+        "detail": {
+          "label": "管理员恢复体力",
+          "score_delta": 0,
+          "target_user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+          "target_display_name": "YMGFC_CN"
+        },
+        "created_at": 1782356915
+      },
+      {
+        "_id": "admin_a6dcee9b1b30c1e6f7e50c41d068d346",
+        "action": "restore_stamina",
+        "detail": {
+          "label": "管理员恢复体力",
+          "score_delta": 0,
+          "target_user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+          "target_display_name": "YMGFC_CN"
+        },
+        "created_at": 1782356920
+      },
+      {
+        "_id": "admin_364ba43d15e149140e9ef995a61ed86f",
+        "action": "restore_stamina",
+        "detail": {
+          "label": "管理员恢复体力",
+          "score_delta": 0,
+          "target_user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+          "target_display_name": "YMGFC_CN"
+        },
+        "created_at": 1782356925
+      },
+      {
+        "_id": "admin_b0515c2a02d3ddcce1ce3a92889061ce",
+        "action": "restore_stamina",
+        "detail": {
+          "label": "管理员恢复体力",
+          "score_delta": 0,
+          "target_user_id": "user_494709dd27180e1ba81d71e156bd87e0",
+          "target_display_name": "YMGFC_CN"
+        },
+        "created_at": 1782356932
+      }
+    ]
   }
 }
