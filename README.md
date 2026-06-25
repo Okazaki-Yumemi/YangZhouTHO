@@ -1,32 +1,54 @@
 # 扬州 THO02 阵营探索
 
-当前仓库保留了早期微信小程序骨架，但现在主用的是本地网站版。
+这是一个本地运行的活动网站，分为玩家端和管理员端。
 
-## 现在怎么跑
+玩家端支持：
 
-1. 在项目根目录打开终端
-2. 运行：
+- 门票码注册
+- 选择队伍
+- 随机行动与特殊事件结算
+- 体力恢复倒计时
+- 手机优先的浏览体验
+
+管理员端支持：
+
+- 按玩家编号、门票码、昵称搜索
+- 手动加分
+- 恢复体力
+- 发放小游戏奖励
+- 发放摊位奖励
+
+## 运行
+
+在项目根目录打开终端后执行：
 
 ```bash
 npm start
 ```
 
-3. 浏览器打开：
+启动后访问：
 
-```text
-http://127.0.0.1:3000
+- 玩家端：[http://127.0.0.1:3000](http://127.0.0.1:3000)
+- 管理员端：`data/admin.local.json` 中配置的本地入口地址
+
+默认本地管理员配置文件：
+
+```json
+{
+  "password": "THOADMIN",
+  "entryPath": "/staff-only-admin.html"
+}
 ```
 
-## 网站版特性
+如果保持默认配置，管理员地址就是：
 
-- 注册、体力恢复、行动结算、随机事件都保留
-- 不依赖微信云开发
-- 自动使用 `shared/seeds` 里的测试数据初始化
-- 本地状态保存在 `data/state.json`
+```text
+http://127.0.0.1:3000/staff-only-admin.html
+```
 
-## 测试门票码
+## 测试数据
 
-可直接使用：
+可直接使用这些测试门票码：
 
 - `TEST0001`
 - `TEST0002`
@@ -34,25 +56,33 @@ http://127.0.0.1:3000
 - `TEST0004`
 - `TEST0005`
 
-更多测试码见 [shared/seeds/ticket-codes.json](G:\Programming\Small_interests_projects\Yangzhou-THO\shared\seeds\ticket-codes.json)。
+更多测试门票码见 [shared/seeds/ticket-codes.json](G:\Programming\Small_interests_projects\Yangzhou-THO\shared\seeds\ticket-codes.json)。
 
-## 目录
+## 数据存储
 
-- `web/`: 网站版前端和本地 Node 服务
-- `shared/`: 共用业务规则和默认种子数据
-- `pictures/`: 角色立绘资源
-- `data/`: 网站版运行时生成的本地状态
-- `miniprogram/`: 旧的小程序前端骨架
-- `cloudfunctions/`: 旧的云函数骨架
+- 运行状态保存在 [data/state.json](G:\Programming\Small_interests_projects\Yangzhou-THO\data\state.json)
+- 本地管理员配置保存在 [data/admin.local.json](G:\Programming\Small_interests_projects\Yangzhou-THO\data\admin.local.json)
 
-## 重置数据
+这两个文件都已经加入 `.gitignore`，不会默认提交。
 
-网站右下角有 `重置测试数据` 按钮。
+## 目录结构
 
-如果你想手工重置，也可以删除 [data/state.json](G:\Programming\Small_interests_projects\Yangzhou-THO\data\state.json) 后重新执行 `npm start`。
+- `web/`：网站前端和本地 Node 服务
+- `shared/`：共享规则、种子数据、活动配置
+- `pictures/`：角色立绘资源
+- `scripts/`：测试脚本
+- `data/`：本地运行时数据
 
-## 本地测试
+## 重置本地数据
+
+如需清空测试进度，删除 [data/state.json](G:\Programming\Small_interests_projects\Yangzhou-THO\data\state.json) 后重新执行：
 
 ```bash
-node scripts/run-tests.js
+npm start
+```
+
+## 测试
+
+```bash
+npm test
 ```
