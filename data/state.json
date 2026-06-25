@@ -450,46 +450,7 @@
     }
   ],
   "users": [
-    {
-      "_id": "user_d296ef76257f7b1322fa50a3e0cfaae2",
-      "openid": "web_9b19444327c6d511b67da188cf8e10c5",
-      "ticket_code": "TEST0001",
-      "display_name": "????A",
-      "team": "daiyousei",
-      "score": 2047,
-      "title": "红魔馆潜入高手",
-      "stamina": 3,
-      "last_stamina_at": 1782356146,
-      "regen_buff_until": 0,
-      "action_refresh_nonce": 0,
-      "last_action_id": "",
-      "next_action_bonus": 0,
-      "banned": false,
-      "one_time_claims": [],
-      "booth_claims": [],
-      "created_at": 1782356146,
-      "updated_at": 1782356666
-    },
-    {
-      "_id": "user_494709dd27180e1ba81d71e156bd87e0",
-      "openid": "web_c59914884dc0f47bf44d118518cf9570",
-      "ticket_code": "TEST0002",
-      "display_name": "YMGFC_CN",
-      "team": "daiyousei",
-      "score": 620,
-      "title": "湖边巡逻妖精",
-      "stamina": 3,
-      "last_stamina_at": 1782356933,
-      "regen_buff_until": 1782358704,
-      "action_refresh_nonce": 25,
-      "last_action_id": "slack_off",
-      "next_action_bonus": 0,
-      "banned": false,
-      "one_time_claims": [],
-      "booth_claims": [],
-      "created_at": 1782356726,
-      "updated_at": 1782356933
-    }
+
   ],
   "actionLogs": [
     {
