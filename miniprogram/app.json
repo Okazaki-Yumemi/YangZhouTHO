@@ -1,0 +1,18 @@
+{
+  "pages": [
+    "pages/register/index",
+    "pages/home/index",
+    "pages/profile/index",
+    "pages/admin/index",
+    "pages/screen/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "扬州 THO02 阵营探索",
+    "navigationBarBackgroundColor": "#d8f0ff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f5fbff",
+    "backgroundTextStyle": "light"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

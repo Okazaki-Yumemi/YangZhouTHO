@@ -1,0 +1,19 @@
+<view class="page-shell">
+  <view class="hero-card" wx:if="{{user}}">
+    <view class="section-title">{{user.display_name}}</view>
+    <view class="muted">队伍：{{user.team}}</view>
+    <view class="muted">探索进度：{{user.score}}</view>
+    <view class="muted">称号：{{user.title}}</view>
+    <view class="muted">体力：{{user.stamina}}</view>
+  </view>
+
+  <view class="panel">
+    <view class="section-title">行动历史</view>
+    <view class="muted">MVP 骨架已预留列表区域，接入 `action_logs` 最近 20 条即可展示。</view>
+  </view>
+
+  <view class="panel">
+    <view class="section-title">随机事件历史</view>
+    <view class="muted">MVP 骨架已预留列表区域，接入带事件的日志即可展示。</view>
+  </view>
+</view>

@@ -1,0 +1,18 @@
+[
+  {
+    "_id": "cirno",
+    "name": "琪露诺探索小队",
+    "member_count": 0,
+    "total_score": 0,
+    "portrait_url": "/assets/images/cirno_placeholder.png",
+    "updated_at": 0
+  },
+  {
+    "_id": "daiyousei",
+    "name": "大妖精探索小队",
+    "member_count": 0,
+    "total_score": 0,
+    "portrait_url": "/assets/images/daiyousei_placeholder.png",
+    "updated_at": 0
+  }
+]

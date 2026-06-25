@@ -1,0 +1,75 @@
+[
+  {
+    "_id": "anti_fairy_trap",
+    "enabled": true,
+    "name": "对妖精特攻陷阱",
+    "description": "你掉进了红魔馆专门针对妖精设计的陷阱！",
+    "weight": 25,
+    "type": "score_delta",
+    "params": {
+      "score_delta": -40,
+      "team_delta": -40
+    }
+  },
+  {
+    "_id": "seija_reverse",
+    "enabled": true,
+    "name": "鬼人正邪的反转",
+    "description": "你碰到了鬼人正邪，她反转了你探索进度分数的百位和十位。",
+    "weight": 15,
+    "type": "reverse_digits",
+    "params": {
+      "digits": [
+        "hundreds",
+        "tens"
+      ]
+    }
+  },
+  {
+    "_id": "scarlet_dining",
+    "enabled": true,
+    "name": "红魔馆餐厅",
+    "description": "你误入了红魔馆的餐厅，美美吃了一顿。",
+    "weight": 20,
+    "type": "restore_stamina",
+    "params": {
+      "restore_to_full": true
+    }
+  },
+  {
+    "_id": "marisa_gift",
+    "enabled": true,
+    "name": "魔理沙分书",
+    "description": "你碰到了正在偷书的魔理沙，她分给你一本精美的魔法书。",
+    "weight": 15,
+    "type": "score_percent_gain",
+    "params": {
+      "percent": 0.08,
+      "max_gain": 120
+    }
+  },
+  {
+    "_id": "mystery_tea",
+    "enabled": true,
+    "name": "神秘红茶",
+    "description": "你看到餐厅内有一杯红茶，于是喝了下去。当你醒来时，已经远远落后于大部队了。",
+    "weight": 15,
+    "type": "restore_and_penalty",
+    "params": {
+      "restore_stamina_to_full": true,
+      "score_delta": -80,
+      "team_delta": -80
+    }
+  },
+  {
+    "_id": "meiling_sleep",
+    "enabled": true,
+    "name": "门卫打盹",
+    "description": "你看到门卫正在打盹，接下来的一次行动似乎会更顺利。",
+    "weight": 10,
+    "type": "next_action_bonus",
+    "params": {
+      "bonus": 0.3
+    }
+  }
+]

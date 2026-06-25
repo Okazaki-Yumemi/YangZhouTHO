@@ -1,0 +1,11 @@
+{
+  "_id": "main",
+  "registration_open": true,
+  "action_open": true,
+  "stamina_cap": 3,
+  "default_regen_interval_sec": 300,
+  "buff_regen_interval_sec": 240,
+  "random_event_chance": 0.12,
+  "team_join_max_diff": 10,
+  "updated_at": 0
+}

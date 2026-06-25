@@ -1,0 +1,130 @@
+[
+  {
+    "_id": "cheer",
+    "enabled": true,
+    "name": "为队长加油助威",
+    "description": "向自己的队长挥舞小旗，获得稳定探索进度。",
+    "weight": 100,
+    "stamina_cost": 1,
+    "type": "fixed_gain",
+    "params": {
+      "gain": 40
+    }
+  },
+  {
+    "_id": "slack_off",
+    "enabled": true,
+    "name": "偷偷摸鱼一下，养精蓄锐",
+    "description": "可能小赚一笔，也可能被发现摸鱼。",
+    "weight": 80,
+    "stamina_cost": 1,
+    "type": "random_outcome",
+    "params": {
+      "outcomes": [
+        {
+          "prob": 0.6,
+          "score_delta": 25,
+          "team_delta": 25,
+          "stamina_delta": 0,
+          "text": "你成功摸鱼，精神变好了。"
+        },
+        {
+          "prob": 0.4,
+          "score_delta": -10,
+          "team_delta": -10,
+          "stamina_delta": 1,
+          "text": "你摸鱼失败，但休息了一会儿。"
+        }
+      ]
+    }
+  },
+  {
+    "_id": "sabotage",
+    "enabled": true,
+    "name": "去隔壁队伍捣乱！",
+    "description": "从对方队伍偷走少量探索进度。",
+    "weight": 70,
+    "stamina_cost": 1,
+    "type": "steal",
+    "params": {
+      "amount": 18
+    }
+  },
+  {
+    "_id": "treasure",
+    "enabled": true,
+    "name": "去红魔馆内偷窃财宝！",
+    "description": "大成功会获得很多探索进度，失败也不会完全空手而归。",
+    "weight": 45,
+    "stamina_cost": 1,
+    "type": "random_outcome",
+    "params": {
+      "outcomes": [
+        {
+          "prob": 0.15,
+          "score_delta": 160,
+          "team_delta": 160,
+          "stamina_delta": 0,
+          "text": "你居然真的偷到了宝物。"
+        },
+        {
+          "prob": 0.85,
+          "score_delta": 5,
+          "team_delta": 5,
+          "stamina_delta": 0,
+          "text": "你只捡到了一枚闪闪发亮但没什么用的硬币。"
+        }
+      ]
+    }
+  },
+  {
+    "_id": "marisa_book",
+    "enabled": true,
+    "name": "学习魔理沙偷书！",
+    "description": "高风险高收益的红魔馆图书馆行动。",
+    "weight": 45,
+    "stamina_cost": 1,
+    "type": "random_outcome",
+    "params": {
+      "outcomes": [
+        {
+          "prob": 0.25,
+          "score_delta": 140,
+          "team_delta": 140,
+          "stamina_delta": 0,
+          "text": "你成功带出了一本精美的魔法书。"
+        },
+        {
+          "prob": 0.25,
+          "score_delta": -70,
+          "team_delta": -70,
+          "stamina_delta": 0,
+          "text": "你被帕秋莉抓住并教育了一顿。"
+        },
+        {
+          "prob": 0.5,
+          "score_delta": 20,
+          "team_delta": 20,
+          "stamina_delta": 0,
+          "text": "你没找到魔法书，但记住了一点图书馆路线。"
+        }
+      ]
+    }
+  },
+  {
+    "_id": "meiling_observe",
+    "enabled": true,
+    "name": "观察门卫养精蓄锐之道",
+    "description": "短时间提高体力恢复速度。",
+    "weight": 35,
+    "stamina_cost": 1,
+    "type": "regen_buff",
+    "params": {
+      "score_delta": 10,
+      "team_delta": 10,
+      "buff_duration_sec": 1800,
+      "buff_regen_interval_sec": 240,
+      "non_stackable": true
+    }
+  }
+]

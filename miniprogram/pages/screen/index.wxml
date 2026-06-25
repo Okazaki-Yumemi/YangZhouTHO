@@ -1,0 +1,11 @@
+<view class="screen-shell">
+  <view class="screen-title">阵营探索实时战报</view>
+  <view class="screen-leader">{{leaderText}}</view>
+  <view class="screen-grid">
+    <view wx:for="{{teams}}" wx:key="id" class="screen-card">
+      <view class="screen-team-name">{{item.name}}</view>
+      <view class="screen-score">{{item.total_score}}</view>
+      <view class="screen-member">{{item.member_count}} 名妖精</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,21 @@
+.mini-nav {
+  margin-top: 24rpx;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 16rpx 0;
+  border-bottom: 1px solid rgba(80, 148, 190, 0.14);
+}
+
+.action-item {
+  padding: 26rpx;
+  margin-bottom: 20rpx;
+}
+
+.action-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-bottom: 12rpx;
+}

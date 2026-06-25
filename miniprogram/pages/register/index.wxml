@@ -1,0 +1,25 @@
+<view class="page-shell">
+  <view class="hero-card">
+    <view class="section-title">加入探索小队</view>
+    <view class="muted">门票二维码可自动带入 code，也支持手动输入。</view>
+    <input
+      class="code-input"
+      placeholder="请输入门票 code"
+      value="{{code}}"
+      bindinput="onCodeInput"
+    />
+  </view>
+
+  <view wx:for="{{teams}}" wx:key="id" class="team-card team-choice {{selectedTeam === item.id ? 'team-choice-active' : ''}}" data-team-id="{{item.id}}" bindtap="onSelectTeam">
+    <image class="team-image" src="{{item.portrait_url}}" mode="aspectFill" />
+    <view class="team-main">
+      <view class="section-title">{{item.name}}</view>
+      <view class="muted">当前人数：{{item.member_count}}</view>
+      <view class="muted">当前总分：{{item.total_score}}</view>
+    </view>
+  </view>
+
+  <view wx:if="{{errorText}}" class="panel error-box">{{errorText}}</view>
+
+  <button class="primary-btn" loading="{{loading}}" bindtap="onSubmit">确认注册</button>
+</view>

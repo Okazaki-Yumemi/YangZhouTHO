@@ -1,0 +1,33 @@
+.code-input {
+  margin-top: 24rpx;
+  padding: 22rpx 26rpx;
+  border-radius: 22rpx;
+  background: #f4fbff;
+}
+
+.team-choice {
+  display: flex;
+  gap: 22rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.team-choice-active {
+  border: 2rpx solid #2f73ff;
+  transform: translateY(-4rpx);
+}
+
+.team-image {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 24rpx;
+  background: linear-gradient(135deg, #d9f6ff 0%, #e8ffe2 100%);
+}
+
+.team-main {
+  flex: 1;
+}
+
+.error-box {
+  color: #c0392b;
+}
