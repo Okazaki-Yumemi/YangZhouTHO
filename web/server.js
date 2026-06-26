@@ -578,6 +578,15 @@ function adminGrant(state, payload) {
   if (grantType === 'custom_score') {
     scoreDelta = Number(payload.score_delta || 0);
     label = payload.reason || '手动加分';
+  } else if (grantType === 'reset_password') {
+    const nextPassword = String(payload.password || '').trim();
+    if (!nextPassword) {
+      return { error: 'BAD_REQUEST', message: '请输入新的密码。' };
+    }
+    const passwordRecord = hashPassword(nextPassword);
+    user.password_salt = passwordRecord.salt;
+    user.password_hash = passwordRecord.hash;
+    label = '管理员重置密码';
   } else if (grantType === 'restore_stamina') {
     const staminaState = calculateCurrentStamina(user, currentNow, state.config);
     user.stamina = staminaState.stamina;
@@ -640,7 +649,9 @@ function adminGrant(state, payload) {
     ...detail
   };
   logAdminAction(state, grantType, summary);
-  addGrantLog(state, user, summary);
+  if (grantType !== 'reset_password') {
+    addGrantLog(state, user, summary);
+  }
   saveState(state);
 
   return {

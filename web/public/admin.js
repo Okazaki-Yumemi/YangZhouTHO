@@ -13,6 +13,7 @@ const adminLogs = document.querySelector('#admin-logs');
 const actionMessage = document.querySelector('#admin-action-message');
 const oneTimeSelect = document.querySelector('#one-time-activity');
 const boothSelect = document.querySelector('#booth-select');
+const resetPasswordInput = document.querySelector('#reset-password');
 
 const adminState = {
   selectedPlayer: null,
@@ -170,7 +171,15 @@ async function submitAdminAction(grantType) {
     target_user_id: adminState.selectedPlayer._id
   };
 
-  if (grantType === 'custom_score') {
+  if (grantType === 'reset_password') {
+    payload.password = resetPasswordInput.value.trim();
+    if (!payload.password) {
+      actionMessage.textContent = '请输入新的密码。';
+      resetPasswordInput.classList.add('invalid');
+      return;
+    }
+    resetPasswordInput.classList.remove('invalid');
+  } else if (grantType === 'custom_score') {
     payload.score_delta = Number(document.querySelector('#custom-score').value || 0);
     payload.reason = document.querySelector('#custom-reason').value.trim() || '手动加分';
   } else if (grantType === 'restore_stamina') {
@@ -198,6 +207,9 @@ async function submitAdminAction(grantType) {
   if (!result.error) {
     adminState.selectedPlayer = result.player;
     renderBootstrap(result.admin);
+    if (grantType === 'reset_password') {
+      resetPasswordInput.value = '';
+    }
   }
 }
 
@@ -225,6 +237,8 @@ playerSearch.addEventListener('keydown', (event) => {
     searchPlayers();
   }
 });
+
+resetPasswordInput.addEventListener('input', () => resetPasswordInput.classList.remove('invalid'));
 
 document.querySelectorAll('[data-admin-action]').forEach((button) => {
   button.addEventListener('click', () => submitAdminAction(button.dataset.adminAction));

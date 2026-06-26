@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>THO02</title>
+    <title>THO02 管理后台</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body class="admin-body">
@@ -37,6 +37,12 @@
 
           <section class="panel">
             <div class="admin-actions">
+              <div class="admin-action-card">
+                <h3>重置密码</h3>
+                <input id="reset-password" type="password" placeholder="输入新的登录密码" />
+                <button data-admin-action="reset_password" class="ghost-btn" type="button">重置密码</button>
+              </div>
+
               <div class="admin-action-card">
                 <h3>手动加分</h3>
                 <input id="custom-score" type="number" placeholder="分值" />

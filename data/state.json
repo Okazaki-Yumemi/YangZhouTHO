@@ -17,7 +17,7 @@
       "member_count": 1,
       "total_score": 0,
       "portrait_url": "/characters/cirno.png",
-      "updated_at": 1782449011
+      "updated_at": 1782449776
     },
     {
       "_id": "daiyousei",
@@ -25,7 +25,7 @@
       "member_count": 1,
       "total_score": 0,
       "portrait_url": "/characters/daiyousei.png",
-      "updated_at": 1782449011
+      "updated_at": 1782449930
     }
   ],
   "actions": [
@@ -272,19 +272,19 @@
       "_id": "TEST0001",
       "code": "TEST0001",
       "status": "bound",
-      "bound_openid": "web_5bd0b7e07009d100d8d865aaf02a9a40",
-      "bound_user_id": "user_fca65b9f25341917e88f54275222438b",
+      "bound_openid": "web_28b46b4600f0fe7840c7f320bdb5bf27",
+      "bound_user_id": "user_003ce5a1d06c2c05d852fe8ea31515fa",
       "created_at": 0,
-      "bound_at": 1782448924
+      "bound_at": 1782449776
     },
     {
       "_id": "TEST0002",
       "code": "TEST0002",
       "status": "bound",
-      "bound_openid": "web_3096a5349121994f6ce2947badddea14",
-      "bound_user_id": "user_e06d63f9b4ca28de3fae85f0f7013f19",
+      "bound_openid": "web_a0ed107895e00965fb810c7fa53ddca0",
+      "bound_user_id": "user_87e3f7729cc878b9af53be122e11007b",
       "created_at": 0,
-      "bound_at": 1782448967
+      "bound_at": 1782449930
     },
     {
       "_id": "TEST0003",
@@ -451,17 +451,17 @@
   ],
   "users": [
     {
-      "_id": "user_fca65b9f25341917e88f54275222438b",
-      "openid": "web_5bd0b7e07009d100d8d865aaf02a9a40",
+      "_id": "user_003ce5a1d06c2c05d852fe8ea31515fa",
+      "openid": "web_28b46b4600f0fe7840c7f320bdb5bf27",
       "ticket_code": "TEST0001",
-      "display_name": "login_case_user",
-      "password_salt": "1b4ded8329e0c41d2cdc0306b53363f1",
-      "password_hash": "68d7b5784c6fa7e84818c2b7fb5f36db5b65446f0555a5578edf42bd00506b4e0c45c0961d535b3b24a5425ce4b6f985e0d4bab1b320d7d7213834d314c411e4",
+      "display_name": "reset_target_user",
+      "password_salt": "ff56c13caa40a18a03096a52b184ef10",
+      "password_hash": "410e14dede3dc15f2aca6f14831b29cec9d998f08c630c3a6bbdeab2639fd113f25106c39098dbb0cd060f443888f435e63735aa7e03cd3da6c13fd69296acdd",
       "team": "cirno",
       "score": 0,
       "title": "刚出发的妖精",
       "stamina": 3,
-      "last_stamina_at": 1782448924,
+      "last_stamina_at": 1782449776,
       "regen_buff_until": 0,
       "action_refresh_nonce": 0,
       "last_action_id": "",
@@ -469,123 +469,73 @@
       "banned": false,
       "one_time_claims": [],
       "booth_claims": [],
-      "created_at": 1782448924,
-      "updated_at": 1782448924
+      "created_at": 1782449776,
+      "updated_at": 1782449776
     },
     {
-      "_id": "user_e06d63f9b4ca28de3fae85f0f7013f19",
-      "openid": "web_3096a5349121994f6ce2947badddea14",
+      "_id": "user_87e3f7729cc878b9af53be122e11007b",
+      "openid": "web_a0ed107895e00965fb810c7fa53ddca0",
       "ticket_code": "TEST0002",
       "display_name": "YMGFC_CN",
-      "password_salt": "371cacb04e7a3033af477f5d28dea022",
-      "password_hash": "6b32fcbb42629478ff23dea0eea62c2917fa587d9533767afb33e6481b2b3bb6ef931fa4dd912379391533a7eb7487f1bb73dcb3bd31339cd16cf56a05380e11",
+      "password_salt": "9f40fb3d83f779d144c11c870b57650f",
+      "password_hash": "727830e9eefd00243a0d4e9cda2d97af3d53cb651511fa1384e73ab6fba39d1436837386221697d62eed0b60a8c491dd72f905806af349faef44986473268941",
       "team": "daiyousei",
       "score": 0,
       "title": "刚出发的妖精",
       "stamina": 3,
-      "last_stamina_at": 1782449009,
-      "regen_buff_until": 1782450809,
-      "action_refresh_nonce": 3,
-      "last_action_id": "treasure",
+      "last_stamina_at": 1782449930,
+      "regen_buff_until": 0,
+      "action_refresh_nonce": 0,
+      "last_action_id": "",
       "next_action_bonus": 0,
       "banned": false,
       "one_time_claims": [],
       "booth_claims": [],
-      "created_at": 1782448967,
-      "updated_at": 1782449011
+      "created_at": 1782449930,
+      "updated_at": 1782449930
     }
   ],
-  "actionLogs": [
-    {
-      "_id": "log_521c9fbece8c093f2d7093cdf848c89e",
-      "kind": "action",
-      "user_id": "user_e06d63f9b4ca28de3fae85f0f7013f19",
-      "openid": "web_3096a5349121994f6ce2947badddea14",
-      "team": "daiyousei",
-      "action_id": "meiling_observe",
-      "action_name": "观察美铃的养生之道",
-      "score_delta": 10,
-      "team_delta_self": 10,
-      "team_delta_opponent": 0,
-      "stamina_before": 3,
-      "stamina_after": 2,
-      "random_event_triggered": false,
-      "random_event_id": "",
-      "random_event_result": null,
-      "created_at": 1782449009
-    },
-    {
-      "_id": "log_71fe32e3ced378042be5914e8a9bf48f",
-      "kind": "action",
-      "user_id": "user_e06d63f9b4ca28de3fae85f0f7013f19",
-      "openid": "web_3096a5349121994f6ce2947badddea14",
-      "team": "daiyousei",
-      "action_id": "slack_off",
-      "action_name": "偷偷摸鱼休息一下",
-      "score_delta": -10,
-      "team_delta_self": -10,
-      "team_delta_opponent": 0,
-      "stamina_before": 2,
-      "stamina_after": 2,
-      "random_event_triggered": false,
-      "random_event_id": "",
-      "random_event_result": null,
-      "created_at": 1782449010
-    },
-    {
-      "_id": "log_77ae72dc40367ad4bbf3253b7122f0f4",
-      "kind": "action",
-      "user_id": "user_e06d63f9b4ca28de3fae85f0f7013f19",
-      "openid": "web_3096a5349121994f6ce2947badddea14",
-      "team": "daiyousei",
-      "action_id": "treasure",
-      "action_name": "去红魔馆里偷宝物",
-      "score_delta": 5,
-      "team_delta_self": 5,
-      "team_delta_opponent": 0,
-      "stamina_before": 2,
-      "stamina_after": 3,
-      "random_event_triggered": true,
-      "random_event_id": "mystery_tea",
-      "random_event_result": {
-        "triggered": true,
-        "eventId": "mystery_tea",
-        "name": "神秘红茶",
-        "description": "你喝下了一杯不该碰的红茶，醒来时精神满了，但队伍进度已经落后。",
-        "scoreDelta": -80,
-        "teamDelta": -80,
-        "staminaAfter": 3,
-        "regenBuffUntil": 1782450809,
-        "nextActionBonus": 0
-      },
-      "created_at": 1782449011
-    }
-  ],
+  "actionLogs": [],
   "grantLogs": [],
-  "requestLocks": [
-    "web_3096a5349121994f6ce2947badddea14:1782449009719-6ee0f980e7666",
-    "web_3096a5349121994f6ce2947badddea14:1782449010954-cd9917bf60b9f",
-    "web_3096a5349121994f6ce2947badddea14:1782449011718-f10bcf52e80308"
-  ],
+  "requestLocks": [],
   "sessions": {
-    "ec246027d92d709dccb76eae4453ba45": {
-      "openid": "web_5bd0b7e07009d100d8d865aaf02a9a40",
-      "created_at": 1782448924
+    "512c7d1ec621d0b30fd5d4f9b7b64310": {
+      "openid": "web_28b46b4600f0fe7840c7f320bdb5bf27",
+      "created_at": 1782449776
     },
-    "b6bf406c9e96335d8fdacf8856cdb206": {
-      "openid": "web_5bd0b7e07009d100d8d865aaf02a9a40",
-      "created_at": 1782448924,
-      "logged_in_at": 1782448924
+    "ad5fb32c583cecd5a70044aa35046ff0": {
+      "openid": "web_7ff9bb3884b840e434142331e15ab1a7",
+      "created_at": 1782449776
     },
-    "5b2dafa42f780cc10f89099024b9ef7e": {
-      "openid": "web_3096a5349121994f6ce2947badddea14",
-      "created_at": 1782448959
+    "f73184eb6815634d72827767ebbd5de2": {
+      "openid": "web_5753865f97f332a702694fa35229145f",
+      "created_at": 1782449776
+    },
+    "aff1eb9e4fc14411847c7d6ae75bb990": {
+      "openid": "web_6b842c6e4f6a3c2cd4444b2ff1642a9c",
+      "created_at": 1782449776
+    },
+    "c2d3ca9b08d060b266d24dba0301e7e6": {
+      "openid": "web_598e87813500391a9113a9bbdc5a6caf",
+      "created_at": 1782449776
+    },
+    "328af9395f445f7c3480e68eb070dea7": {
+      "openid": "web_28b46b4600f0fe7840c7f320bdb5bf27",
+      "created_at": 1782449776,
+      "logged_in_at": 1782449777
+    },
+    "e8b75d60c7cd0bd410959fc19491149b": {
+      "openid": "web_a0ed107895e00965fb810c7fa53ddca0",
+      "created_at": 1782449840
     }
   },
   "admin": {
     "sessions": {
-      "fcb448f8d108b8fadfaa37e5cf54fcb3": {
-        "created_at": 1782449138
+      "0cbb6e72b7c73b30c319c6db1df05bca": {
+        "created_at": 1782449776
+      },
+      "c678fadd23a42da4061e08131cd47456": {
+        "created_at": 1782450091
       }
     },
     "oneTimeActivities": [
@@ -625,6 +575,18 @@
         "score": 2
       }
     ],
-    "logs": []
+    "logs": [
+      {
+        "_id": "admin_1eb520b93f9b5c2edee593249a197846",
+        "action": "reset_password",
+        "detail": {
+          "label": "管理员重置密码",
+          "score_delta": 0,
+          "target_user_id": "user_003ce5a1d06c2c05d852fe8ea31515fa",
+          "target_display_name": "reset_target_user"
+        },
+        "created_at": 1782449776
+      }
+    ]
   }
 }
