@@ -23,6 +23,7 @@ const homeView = document.querySelector('#home-view');
 const ticketInput = document.querySelector('#ticket-code');
 const nicknameInput = document.querySelector('#display-name');
 const passwordInput = document.querySelector('#register-password');
+const passwordConfirmInput = document.querySelector('#register-password-confirm');
 const loginNameInput = document.querySelector('#login-name');
 const loginPasswordInput = document.querySelector('#login-password');
 const registerBtn = document.querySelector('#register-btn');
@@ -73,7 +74,9 @@ function validateRequiredFields(fields) {
 
 function clearRegisterErrors() {
   registerError.classList.add('hidden');
-  [ticketInput, nicknameInput, passwordInput].forEach((input) => setFieldInvalid(input, false));
+  [ticketInput, nicknameInput, passwordInput, passwordConfirmInput].forEach((input) =>
+    setFieldInvalid(input, false)
+  );
 }
 
 function clearLoginErrors() {
@@ -274,8 +277,15 @@ function openResultModal(result) {
 
 registerBtn.addEventListener('click', async () => {
   clearRegisterErrors();
-  if (!validateRequiredFields([ticketInput, nicknameInput, passwordInput])) {
-    registerError.textContent = '请填写门票码、昵称和密码。';
+  if (!validateRequiredFields([ticketInput, nicknameInput, passwordInput, passwordConfirmInput])) {
+    registerError.textContent = '请填写门票码、昵称、密码和确认密码。';
+    registerError.classList.remove('hidden');
+    return;
+  }
+  if (passwordInput.value !== passwordConfirmInput.value) {
+    setFieldInvalid(passwordInput, true);
+    setFieldInvalid(passwordConfirmInput, true);
+    registerError.textContent = '两次输入的密码不一致。';
     registerError.classList.remove('hidden');
     return;
   }
@@ -330,6 +340,7 @@ resetBtn.addEventListener('click', async () => {
   ticketInput.value = '';
   nicknameInput.value = '';
   passwordInput.value = '';
+  passwordConfirmInput.value = '';
   loginNameInput.value = '';
   loginPasswordInput.value = '';
   clearRegisterErrors();
@@ -338,7 +349,7 @@ resetBtn.addEventListener('click', async () => {
   renderHome(result.state);
 });
 
-[ticketInput, nicknameInput, passwordInput].forEach((input) => {
+[ticketInput, nicknameInput, passwordInput, passwordConfirmInput].forEach((input) => {
   input.addEventListener('input', () => setFieldInvalid(input, false));
 });
 [loginNameInput, loginPasswordInput].forEach((input) => {
