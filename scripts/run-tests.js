@@ -7,6 +7,7 @@ const {
   resolveRandomEvent,
   swapHundredsAndTens
 } = require('../shared/logic');
+const { findUserByDisplayName, hashPassword, normalizeDisplayName, verifyPassword } = require('../shared/auth');
 
 function testCalculateCurrentStamina() {
   const result = calculateCurrentStamina(
@@ -80,7 +81,7 @@ function testRandomEventPercentGain() {
   const result = resolveRandomEvent(
     {
       _id: 'marisa_gift',
-      name: '魔理沙分书',
+      name: '魔理沙分礼',
       description: '',
       type: 'score_percent_gain',
       params: { percent: 0.08, max_gain: 120 }
@@ -93,6 +94,19 @@ function testRandomEventPercentGain() {
   assert.equal(result.scoreDelta, 80);
 }
 
+function testPasswordHashing() {
+  const record = hashPassword('secret-pass');
+  assert.equal(verifyPassword('secret-pass', record.salt, record.hash), true);
+  assert.equal(verifyPassword('wrong-pass', record.salt, record.hash), false);
+}
+
+function testDisplayNameLookup() {
+  const users = [{ display_name: ' Alice ' }, { display_name: 'Bob' }];
+  assert.equal(normalizeDisplayName('  ALICE  '), 'alice');
+  assert.deepEqual(findUserByDisplayName(users, 'alice'), users[0]);
+  assert.equal(findUserByDisplayName(users, 'charlie'), null);
+}
+
 function run() {
   testCalculateCurrentStamina();
   testJoinRestriction();
@@ -100,6 +114,8 @@ function run() {
   testStealOutcome();
   testReverseDigits();
   testRandomEventPercentGain();
+  testPasswordHashing();
+  testDisplayNameLookup();
   console.log('All tests passed');
 }
 

@@ -13,7 +13,7 @@
           <div class="panel-head">
             <p class="eyebrow">第一步</p>
             <h1>加入探索小队</h1>
-            <p class="panel-copy">输入门票 code，选择阵营，开始累积自己的探索进度。</p>
+            <p class="panel-copy">输入门票 code，选择阵营，并设置昵称和密码。关闭页面后可以通过昵称和密码重新登录。</p>
           </div>
           <div class="field-group">
             <label for="ticket-code">门票 code</label>
@@ -22,10 +22,33 @@
           <div id="team-picks" class="team-picks"></div>
           <div class="field-group">
             <label for="display-name">昵称</label>
-            <input id="display-name" type="text" placeholder="不填会自动生成游客编号" />
+            <input id="display-name" type="text" placeholder="请输入唯一昵称" />
+          </div>
+          <div class="field-group">
+            <label for="register-password">密码</label>
+            <input id="register-password" type="password" placeholder="请输入密码" />
+            <p class="helper-text">请务必记住昵称和密码，关闭页面后需要用它们重新登录。</p>
           </div>
           <p id="register-error" class="error-text hidden"></p>
           <button id="register-btn" class="primary-btn" type="button">确认注册</button>
+
+          <div class="form-divider"></div>
+
+          <div class="panel-head secondary-head">
+            <p class="eyebrow">重新登录</p>
+            <h2>已有账号</h2>
+            <p class="panel-copy">如果已经注册过，可以直接输入昵称和密码回到系统。</p>
+          </div>
+          <div class="field-group">
+            <label for="login-name">昵称</label>
+            <input id="login-name" type="text" placeholder="请输入注册时的昵称" />
+          </div>
+          <div class="field-group">
+            <label for="login-password">密码</label>
+            <input id="login-password" type="password" placeholder="请输入注册时的密码" />
+          </div>
+          <p id="login-error" class="error-text hidden"></p>
+          <button id="login-btn" class="ghost-btn wide-btn" type="button">用昵称和密码登录</button>
         </section>
 
         <section id="home-view" class="panel hidden">

@@ -103,6 +103,20 @@ p {
   font-size: 16px;
 }
 
+.field-group input:focus,
+.search-row input:focus,
+.admin-action-card input:focus,
+.admin-action-card select:focus {
+  outline: none;
+  border-color: rgba(44, 135, 217, 0.5);
+  box-shadow: 0 0 0 3px rgba(44, 135, 217, 0.12);
+}
+
+.field-group input.invalid {
+  border-color: var(--warn);
+  box-shadow: 0 0 0 3px rgba(212, 84, 84, 0.14);
+}
+
 .primary-btn,
 .ghost-btn,
 .ghost-link,
@@ -137,6 +151,10 @@ p {
   color: var(--blue);
   font-weight: 700;
   text-decoration: none;
+}
+
+.wide-btn {
+  width: 100%;
 }
 
 .team-picks,
@@ -222,6 +240,16 @@ p {
 .error-text {
   margin-bottom: 14px;
   color: var(--warn);
+}
+
+.form-divider {
+  height: 1px;
+  margin: 24px 0;
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+}
+
+.secondary-head {
+  margin-bottom: 12px;
 }
 
 .hidden {

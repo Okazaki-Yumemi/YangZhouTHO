@@ -3,6 +3,7 @@ const path = require('node:path');
 const http = require('node:http');
 const crypto = require('node:crypto');
 const { TEAM_IDS, TEAM_FULL_HINT, ERROR_CODES } = require('../shared/constants');
+const { findUserByDisplayName, hashPassword, verifyPassword } = require('../shared/auth');
 const {
   applyPositiveBonus,
   calculateCurrentStamina,
@@ -151,6 +152,14 @@ function getUserByOpenid(state, openid) {
   return state.users.find((user) => user.openid === openid) || null;
 }
 
+function getUserByCredentials(state, displayName, password) {
+  const user = findUserByDisplayName(state.users, displayName);
+  if (!user) {
+    return null;
+  }
+  return verifyPassword(password, user.password_salt, user.password_hash) ? user : null;
+}
+
 function getSession(req, state) {
   const sessionId = getCookie(req, 'tho_session');
   return sessionId && state.sessions[sessionId] ? { sessionId, ...state.sessions[sessionId] } : null;
@@ -287,7 +296,10 @@ function buildHomeState(state, openid) {
 }
 
 function registerUser(state, openid, payload) {
-  if (!payload.code || !payload.team) {
+  const code = String(payload.code || '').trim();
+  const displayName = String(payload.display_name || '').trim();
+  const password = String(payload.password || '').trim();
+  if (!code || !payload.team || !displayName || !password) {
     return { error: 'BAD_REQUEST', message: '请填写门票码并选择队伍。' };
   }
   if (!state.config.registration_open) {
@@ -297,7 +309,11 @@ function registerUser(state, openid, payload) {
     return { error: ERROR_CODES.ALREADY_REGISTERED, message: '当前浏览器已经注册过了。' };
   }
 
-  const ticket = state.ticketCodes.find((item) => item.code === payload.code);
+  if (findUserByDisplayName(state.users, displayName)) {
+    return { error: ERROR_CODES.DUPLICATE_DISPLAY_NAME, message: '这个昵称已经被使用，请换一个昵称。' };
+  }
+
+  const ticket = state.ticketCodes.find((item) => item.code === code);
   if (!ticket || ticket.status === 'disabled') {
     return { error: ERROR_CODES.INVALID_CODE, message: '门票码不存在。' };
   }
@@ -312,11 +328,15 @@ function registerUser(state, openid, payload) {
   }
 
   const currentNow = nowSec();
+  const passwordRecord = hashPassword(password);
   const user = {
     _id: `user_${createToken()}`,
     openid,
-    ticket_code: payload.code,
+    ticket_code: code,
     display_name: payload.display_name || `游客${String(state.users.length + 1).padStart(4, '0')}`,
+    display_name: displayName,
+    password_salt: passwordRecord.salt,
+    password_hash: passwordRecord.hash,
     team: payload.team,
     score: 0,
     title: getTitleByScore(0, state.titles),
@@ -343,6 +363,24 @@ function registerUser(state, openid, payload) {
   saveState(state);
 
   return { success: true, state: buildHomeState(state, openid) };
+}
+
+function loginUser(state, sessionId, payload) {
+  const displayName = String(payload.display_name || '').trim();
+  const password = String(payload.password || '').trim();
+  if (!displayName || !password) {
+    return { error: 'BAD_REQUEST', message: '请填写昵称和密码。' };
+  }
+
+  const user = getUserByCredentials(state, displayName, password);
+  if (!user) {
+    return { error: ERROR_CODES.INVALID_CREDENTIALS, message: '昵称或密码错误。' };
+  }
+
+  state.sessions[sessionId].openid = user.openid;
+  state.sessions[sessionId].logged_in_at = nowSec();
+  saveState(state);
+  return { success: true, state: buildHomeState(state, user.openid) };
 }
 
 function performAction(state, openid, payload) {
@@ -682,6 +720,17 @@ const server = http.createServer(async (req, res) => {
     try {
       const body = await collectBody(req);
       const result = registerUser(state, session.openid, body);
+      sendJson(res, result.error ? 400 : 200, result);
+    } catch {
+      sendJson(res, 400, { error: 'BAD_REQUEST', message: '请求格式错误。' });
+    }
+    return;
+  }
+
+  if (req.method === 'POST' && url.pathname === '/api/login') {
+    try {
+      const body = await collectBody(req);
+      const result = loginUser(state, session.sessionId, body);
       sendJson(res, result.error ? 400 : 200, result);
     } catch {
       sendJson(res, 400, { error: 'BAD_REQUEST', message: '请求格式错误。' });

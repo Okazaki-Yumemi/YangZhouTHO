@@ -22,8 +22,13 @@ const registerView = document.querySelector('#register-view');
 const homeView = document.querySelector('#home-view');
 const ticketInput = document.querySelector('#ticket-code');
 const nicknameInput = document.querySelector('#display-name');
+const passwordInput = document.querySelector('#register-password');
+const loginNameInput = document.querySelector('#login-name');
+const loginPasswordInput = document.querySelector('#login-password');
 const registerBtn = document.querySelector('#register-btn');
+const loginBtn = document.querySelector('#login-btn');
 const registerError = document.querySelector('#register-error');
+const loginError = document.querySelector('#login-error');
 const teamBoard = document.querySelector('#team-board');
 const teamPicks = document.querySelector('#team-picks');
 const recentLogs = document.querySelector('#recent-logs');
@@ -38,7 +43,7 @@ function formatSeconds(totalSec) {
   const value = Math.max(0, Number(totalSec || 0));
   const minutes = Math.floor(value / 60);
   const seconds = value % 60;
-  return `${minutes}分${String(seconds).padStart(2, '0')}秒`;
+  return `${minutes}分 ${String(seconds).padStart(2, '0')}秒`;
 }
 
 async function request(path, options = {}) {
@@ -47,6 +52,32 @@ async function request(path, options = {}) {
     ...options
   });
   return response.json();
+}
+
+function setFieldInvalid(input, invalid) {
+  input.classList.toggle('invalid', invalid);
+}
+
+function validateRequiredFields(fields) {
+  let valid = true;
+  fields.forEach((input) => {
+    const missing = !input.value.trim();
+    setFieldInvalid(input, missing);
+    if (missing) {
+      valid = false;
+    }
+  });
+  return valid;
+}
+
+function clearRegisterErrors() {
+  registerError.classList.add('hidden');
+  [ticketInput, nicknameInput, passwordInput].forEach((input) => setFieldInvalid(input, false));
+}
+
+function clearLoginErrors() {
+  loginError.classList.add('hidden');
+  [loginNameInput, loginPasswordInput].forEach((input) => setFieldInvalid(input, false));
 }
 
 function renderRecentLogs(logs, container) {
@@ -144,7 +175,7 @@ function renderHome(current) {
       ? `${current.user.stamina} / ${current.config.stamina_cap}（已满）`
       : `${current.user.stamina} / ${current.config.stamina_cap} · ${formatSeconds(
           current.user.next_regen_in_sec
-        )}后恢复1点`;
+        )}后恢复 1 点`;
 
   actionsGrid.innerHTML = current.available_actions
     .map(
@@ -202,11 +233,11 @@ function openResultModal(result) {
     document.querySelector('#event-character').textContent = meta.name;
     document.querySelector('#event-title').textContent = result.random_event.name;
     document.querySelector('#event-description').textContent = result.random_event.description;
-    document.querySelector('#event-effect').textContent = `事件结算：个人 ${
+    document.querySelector('#event-effect').textContent = `事件结算：个人${
       result.random_event.scoreDelta > 0 ? '+' : ''
-    }${result.random_event.scoreDelta}，队伍 ${
-      result.random_event.teamDelta > 0 ? '+' : ''
-    }${result.random_event.teamDelta}`;
+    }${result.random_event.scoreDelta}，队伍${result.random_event.teamDelta > 0 ? '+' : ''}${
+      result.random_event.teamDelta
+    }`;
     eventBox.classList.remove('hidden');
   } else {
     eventBox.classList.add('hidden');
@@ -216,13 +247,25 @@ function openResultModal(result) {
 }
 
 registerBtn.addEventListener('click', async () => {
-  registerError.classList.add('hidden');
+  clearRegisterErrors();
+  if (!validateRequiredFields([ticketInput, nicknameInput, passwordInput])) {
+    registerError.textContent = '请填写门票码、昵称和密码。';
+    registerError.classList.remove('hidden');
+    return;
+  }
+  if (!uiState.selectedTeam) {
+    registerError.textContent = '请选择队伍。';
+    registerError.classList.remove('hidden');
+    return;
+  }
+
   const result = await request('/api/register', {
     method: 'POST',
     body: JSON.stringify({
       code: ticketInput.value.trim(),
       team: uiState.selectedTeam,
-      display_name: nicknameInput.value.trim()
+      display_name: nicknameInput.value.trim(),
+      password: passwordInput.value.trim()
     })
   });
   if (result.error) {
@@ -233,10 +276,38 @@ registerBtn.addEventListener('click', async () => {
   renderHome(result.state);
 });
 
+loginBtn.addEventListener('click', async () => {
+  clearLoginErrors();
+  if (!validateRequiredFields([loginNameInput, loginPasswordInput])) {
+    loginError.textContent = '请填写昵称和密码。';
+    loginError.classList.remove('hidden');
+    return;
+  }
+
+  const result = await request('/api/login', {
+    method: 'POST',
+    body: JSON.stringify({
+      display_name: loginNameInput.value.trim(),
+      password: loginPasswordInput.value.trim()
+    })
+  });
+  if (result.error) {
+    loginError.textContent = result.message;
+    loginError.classList.remove('hidden');
+    return;
+  }
+  renderHome(result.state);
+});
+
 resetBtn.addEventListener('click', async () => {
   uiState.selectedTeam = '';
   ticketInput.value = '';
   nicknameInput.value = '';
+  passwordInput.value = '';
+  loginNameInput.value = '';
+  loginPasswordInput.value = '';
+  clearRegisterErrors();
+  clearLoginErrors();
   const result = await request('/api/reset', { method: 'POST' });
   renderHome(result.state);
 });

@@ -14,18 +14,18 @@
     {
       "_id": "cirno",
       "name": "琪露诺探索小队",
-      "member_count": 0,
+      "member_count": 1,
       "total_score": 0,
       "portrait_url": "/characters/cirno.png",
-      "updated_at": 0
+      "updated_at": 1782449011
     },
     {
       "_id": "daiyousei",
       "name": "大妖精探索小队",
-      "member_count": 0,
+      "member_count": 1,
       "total_score": 0,
       "portrait_url": "/characters/daiyousei.png",
-      "updated_at": 0
+      "updated_at": 1782449011
     }
   ],
   "actions": [
@@ -271,20 +271,20 @@
     {
       "_id": "TEST0001",
       "code": "TEST0001",
-      "status": "unused",
-      "bound_openid": "",
-      "bound_user_id": "",
+      "status": "bound",
+      "bound_openid": "web_5bd0b7e07009d100d8d865aaf02a9a40",
+      "bound_user_id": "user_fca65b9f25341917e88f54275222438b",
       "created_at": 0,
-      "bound_at": 0
+      "bound_at": 1782448924
     },
     {
       "_id": "TEST0002",
       "code": "TEST0002",
-      "status": "unused",
-      "bound_openid": "",
-      "bound_user_id": "",
+      "status": "bound",
+      "bound_openid": "web_3096a5349121994f6ce2947badddea14",
+      "bound_user_id": "user_e06d63f9b4ca28de3fae85f0f7013f19",
       "created_at": 0,
-      "bound_at": 0
+      "bound_at": 1782448967
     },
     {
       "_id": "TEST0003",
@@ -449,13 +449,145 @@
       "bound_at": 0
     }
   ],
-  "users": [],
-  "actionLogs": [],
+  "users": [
+    {
+      "_id": "user_fca65b9f25341917e88f54275222438b",
+      "openid": "web_5bd0b7e07009d100d8d865aaf02a9a40",
+      "ticket_code": "TEST0001",
+      "display_name": "login_case_user",
+      "password_salt": "1b4ded8329e0c41d2cdc0306b53363f1",
+      "password_hash": "68d7b5784c6fa7e84818c2b7fb5f36db5b65446f0555a5578edf42bd00506b4e0c45c0961d535b3b24a5425ce4b6f985e0d4bab1b320d7d7213834d314c411e4",
+      "team": "cirno",
+      "score": 0,
+      "title": "刚出发的妖精",
+      "stamina": 3,
+      "last_stamina_at": 1782448924,
+      "regen_buff_until": 0,
+      "action_refresh_nonce": 0,
+      "last_action_id": "",
+      "next_action_bonus": 0,
+      "banned": false,
+      "one_time_claims": [],
+      "booth_claims": [],
+      "created_at": 1782448924,
+      "updated_at": 1782448924
+    },
+    {
+      "_id": "user_e06d63f9b4ca28de3fae85f0f7013f19",
+      "openid": "web_3096a5349121994f6ce2947badddea14",
+      "ticket_code": "TEST0002",
+      "display_name": "YMGFC_CN",
+      "password_salt": "371cacb04e7a3033af477f5d28dea022",
+      "password_hash": "6b32fcbb42629478ff23dea0eea62c2917fa587d9533767afb33e6481b2b3bb6ef931fa4dd912379391533a7eb7487f1bb73dcb3bd31339cd16cf56a05380e11",
+      "team": "daiyousei",
+      "score": 0,
+      "title": "刚出发的妖精",
+      "stamina": 3,
+      "last_stamina_at": 1782449009,
+      "regen_buff_until": 1782450809,
+      "action_refresh_nonce": 3,
+      "last_action_id": "treasure",
+      "next_action_bonus": 0,
+      "banned": false,
+      "one_time_claims": [],
+      "booth_claims": [],
+      "created_at": 1782448967,
+      "updated_at": 1782449011
+    }
+  ],
+  "actionLogs": [
+    {
+      "_id": "log_521c9fbece8c093f2d7093cdf848c89e",
+      "kind": "action",
+      "user_id": "user_e06d63f9b4ca28de3fae85f0f7013f19",
+      "openid": "web_3096a5349121994f6ce2947badddea14",
+      "team": "daiyousei",
+      "action_id": "meiling_observe",
+      "action_name": "观察美铃的养生之道",
+      "score_delta": 10,
+      "team_delta_self": 10,
+      "team_delta_opponent": 0,
+      "stamina_before": 3,
+      "stamina_after": 2,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782449009
+    },
+    {
+      "_id": "log_71fe32e3ced378042be5914e8a9bf48f",
+      "kind": "action",
+      "user_id": "user_e06d63f9b4ca28de3fae85f0f7013f19",
+      "openid": "web_3096a5349121994f6ce2947badddea14",
+      "team": "daiyousei",
+      "action_id": "slack_off",
+      "action_name": "偷偷摸鱼休息一下",
+      "score_delta": -10,
+      "team_delta_self": -10,
+      "team_delta_opponent": 0,
+      "stamina_before": 2,
+      "stamina_after": 2,
+      "random_event_triggered": false,
+      "random_event_id": "",
+      "random_event_result": null,
+      "created_at": 1782449010
+    },
+    {
+      "_id": "log_77ae72dc40367ad4bbf3253b7122f0f4",
+      "kind": "action",
+      "user_id": "user_e06d63f9b4ca28de3fae85f0f7013f19",
+      "openid": "web_3096a5349121994f6ce2947badddea14",
+      "team": "daiyousei",
+      "action_id": "treasure",
+      "action_name": "去红魔馆里偷宝物",
+      "score_delta": 5,
+      "team_delta_self": 5,
+      "team_delta_opponent": 0,
+      "stamina_before": 2,
+      "stamina_after": 3,
+      "random_event_triggered": true,
+      "random_event_id": "mystery_tea",
+      "random_event_result": {
+        "triggered": true,
+        "eventId": "mystery_tea",
+        "name": "神秘红茶",
+        "description": "你喝下了一杯不该碰的红茶，醒来时精神满了，但队伍进度已经落后。",
+        "scoreDelta": -80,
+        "teamDelta": -80,
+        "staminaAfter": 3,
+        "regenBuffUntil": 1782450809,
+        "nextActionBonus": 0
+      },
+      "created_at": 1782449011
+    }
+  ],
   "grantLogs": [],
-  "requestLocks": [],
-  "sessions": {},
+  "requestLocks": [
+    "web_3096a5349121994f6ce2947badddea14:1782449009719-6ee0f980e7666",
+    "web_3096a5349121994f6ce2947badddea14:1782449010954-cd9917bf60b9f",
+    "web_3096a5349121994f6ce2947badddea14:1782449011718-f10bcf52e80308"
+  ],
+  "sessions": {
+    "ec246027d92d709dccb76eae4453ba45": {
+      "openid": "web_5bd0b7e07009d100d8d865aaf02a9a40",
+      "created_at": 1782448924
+    },
+    "b6bf406c9e96335d8fdacf8856cdb206": {
+      "openid": "web_5bd0b7e07009d100d8d865aaf02a9a40",
+      "created_at": 1782448924,
+      "logged_in_at": 1782448924
+    },
+    "5b2dafa42f780cc10f89099024b9ef7e": {
+      "openid": "web_3096a5349121994f6ce2947badddea14",
+      "created_at": 1782448959
+    }
+  },
   "admin": {
-    "sessions": {},
+    "sessions": {
+      "fcb448f8d108b8fadfaa37e5cf54fcb3": {
+        "created_at": 1782449138
+      }
+    },
     "oneTimeActivities": [
       {
         "id": "stage_game_a",
