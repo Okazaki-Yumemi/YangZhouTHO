@@ -283,6 +283,26 @@ function buildRecentFeed(state) {
     .slice(0, 10);
 }
 
+function buildLeaderboard(state) {
+  return state.users
+    .map((user) => {
+      const normalized = normalizeUser(user, state);
+      return {
+        user_id: normalized._id,
+        display_name: normalized.display_name,
+        score: normalized.score,
+        title: normalized.title,
+        team: normalized.team
+      };
+    })
+    .sort((a, b) => {
+      if (b.score !== a.score) {
+        return b.score - a.score;
+      }
+      return a.display_name.localeCompare(b.display_name, 'zh-CN');
+    });
+}
+
 function buildHomeState(state, openid) {
   const user = getUserByOpenid(state, openid);
   return {
@@ -291,7 +311,8 @@ function buildHomeState(state, openid) {
     teams: mapTeamsById(state),
     config: state.config,
     available_actions: user ? selectActionsForUser(state, user, openid) : [],
-    recent_logs: buildRecentFeed(state)
+    recent_logs: buildRecentFeed(state),
+    leaderboard: buildLeaderboard(state)
   };
 }
 
@@ -587,6 +608,24 @@ function adminGrant(state, payload) {
     user.password_salt = passwordRecord.salt;
     user.password_hash = passwordRecord.hash;
     label = '管理员重置密码';
+  } else if (grantType === 'reset_identity') {
+    const previousOpenid = user.openid;
+    const nextOpenid = `web_${createToken()}`;
+    user.openid = nextOpenid;
+
+    state.ticketCodes.forEach((ticket) => {
+      if (ticket.bound_user_id === user._id || ticket.bound_openid === previousOpenid) {
+        ticket.bound_openid = nextOpenid;
+      }
+    });
+
+    Object.values(state.sessions).forEach((session) => {
+      if (session.openid === previousOpenid) {
+        session.openid = `web_${createToken()}`;
+      }
+    });
+
+    label = '管理员重置ID';
   } else if (grantType === 'restore_stamina') {
     const staminaState = calculateCurrentStamina(user, currentNow, state.config);
     user.stamina = staminaState.stamina;
@@ -649,7 +688,7 @@ function adminGrant(state, payload) {
     ...detail
   };
   logAdminAction(state, grantType, summary);
-  if (grantType !== 'reset_password') {
+  if (!['reset_password', 'reset_identity'].includes(grantType)) {
     addGrantLog(state, user, summary);
   }
   saveState(state);

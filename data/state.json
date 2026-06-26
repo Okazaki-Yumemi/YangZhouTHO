@@ -14,18 +14,18 @@
     {
       "_id": "cirno",
       "name": "琪露诺探索小队",
-      "member_count": 1,
+      "member_count": 0,
       "total_score": 0,
       "portrait_url": "/characters/cirno.png",
-      "updated_at": 1782449776
+      "updated_at": 0
     },
     {
       "_id": "daiyousei",
       "name": "大妖精探索小队",
-      "member_count": 1,
+      "member_count": 0,
       "total_score": 0,
       "portrait_url": "/characters/daiyousei.png",
-      "updated_at": 1782449930
+      "updated_at": 0
     }
   ],
   "actions": [
@@ -271,20 +271,20 @@
     {
       "_id": "TEST0001",
       "code": "TEST0001",
-      "status": "bound",
-      "bound_openid": "web_28b46b4600f0fe7840c7f320bdb5bf27",
-      "bound_user_id": "user_003ce5a1d06c2c05d852fe8ea31515fa",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
       "created_at": 0,
-      "bound_at": 1782449776
+      "bound_at": 0
     },
     {
       "_id": "TEST0002",
       "code": "TEST0002",
-      "status": "bound",
-      "bound_openid": "web_a0ed107895e00965fb810c7fa53ddca0",
-      "bound_user_id": "user_87e3f7729cc878b9af53be122e11007b",
+      "status": "unused",
+      "bound_openid": "",
+      "bound_user_id": "",
       "created_at": 0,
-      "bound_at": 1782449930
+      "bound_at": 0
     },
     {
       "_id": "TEST0003",
@@ -449,95 +449,13 @@
       "bound_at": 0
     }
   ],
-  "users": [
-    {
-      "_id": "user_003ce5a1d06c2c05d852fe8ea31515fa",
-      "openid": "web_28b46b4600f0fe7840c7f320bdb5bf27",
-      "ticket_code": "TEST0001",
-      "display_name": "reset_target_user",
-      "password_salt": "ff56c13caa40a18a03096a52b184ef10",
-      "password_hash": "410e14dede3dc15f2aca6f14831b29cec9d998f08c630c3a6bbdeab2639fd113f25106c39098dbb0cd060f443888f435e63735aa7e03cd3da6c13fd69296acdd",
-      "team": "cirno",
-      "score": 0,
-      "title": "刚出发的妖精",
-      "stamina": 3,
-      "last_stamina_at": 1782449776,
-      "regen_buff_until": 0,
-      "action_refresh_nonce": 0,
-      "last_action_id": "",
-      "next_action_bonus": 0,
-      "banned": false,
-      "one_time_claims": [],
-      "booth_claims": [],
-      "created_at": 1782449776,
-      "updated_at": 1782449776
-    },
-    {
-      "_id": "user_87e3f7729cc878b9af53be122e11007b",
-      "openid": "web_a0ed107895e00965fb810c7fa53ddca0",
-      "ticket_code": "TEST0002",
-      "display_name": "YMGFC_CN",
-      "password_salt": "9f40fb3d83f779d144c11c870b57650f",
-      "password_hash": "727830e9eefd00243a0d4e9cda2d97af3d53cb651511fa1384e73ab6fba39d1436837386221697d62eed0b60a8c491dd72f905806af349faef44986473268941",
-      "team": "daiyousei",
-      "score": 0,
-      "title": "刚出发的妖精",
-      "stamina": 3,
-      "last_stamina_at": 1782449930,
-      "regen_buff_until": 0,
-      "action_refresh_nonce": 0,
-      "last_action_id": "",
-      "next_action_bonus": 0,
-      "banned": false,
-      "one_time_claims": [],
-      "booth_claims": [],
-      "created_at": 1782449930,
-      "updated_at": 1782449930
-    }
-  ],
+  "users": [],
   "actionLogs": [],
   "grantLogs": [],
   "requestLocks": [],
-  "sessions": {
-    "512c7d1ec621d0b30fd5d4f9b7b64310": {
-      "openid": "web_28b46b4600f0fe7840c7f320bdb5bf27",
-      "created_at": 1782449776
-    },
-    "ad5fb32c583cecd5a70044aa35046ff0": {
-      "openid": "web_7ff9bb3884b840e434142331e15ab1a7",
-      "created_at": 1782449776
-    },
-    "f73184eb6815634d72827767ebbd5de2": {
-      "openid": "web_5753865f97f332a702694fa35229145f",
-      "created_at": 1782449776
-    },
-    "aff1eb9e4fc14411847c7d6ae75bb990": {
-      "openid": "web_6b842c6e4f6a3c2cd4444b2ff1642a9c",
-      "created_at": 1782449776
-    },
-    "c2d3ca9b08d060b266d24dba0301e7e6": {
-      "openid": "web_598e87813500391a9113a9bbdc5a6caf",
-      "created_at": 1782449776
-    },
-    "328af9395f445f7c3480e68eb070dea7": {
-      "openid": "web_28b46b4600f0fe7840c7f320bdb5bf27",
-      "created_at": 1782449776,
-      "logged_in_at": 1782449777
-    },
-    "e8b75d60c7cd0bd410959fc19491149b": {
-      "openid": "web_a0ed107895e00965fb810c7fa53ddca0",
-      "created_at": 1782449840
-    }
-  },
+  "sessions": {},
   "admin": {
-    "sessions": {
-      "0cbb6e72b7c73b30c319c6db1df05bca": {
-        "created_at": 1782449776
-      },
-      "c678fadd23a42da4061e08131cd47456": {
-        "created_at": 1782450091
-      }
-    },
+    "sessions": {},
     "oneTimeActivities": [
       {
         "id": "stage_game_a",
@@ -575,18 +493,6 @@
         "score": 2
       }
     ],
-    "logs": [
-      {
-        "_id": "admin_1eb520b93f9b5c2edee593249a197846",
-        "action": "reset_password",
-        "detail": {
-          "label": "管理员重置密码",
-          "score_delta": 0,
-          "target_user_id": "user_003ce5a1d06c2c05d852fe8ea31515fa",
-          "target_display_name": "reset_target_user"
-        },
-        "created_at": 1782449776
-      }
-    ]
+    "logs": []
   }
 }

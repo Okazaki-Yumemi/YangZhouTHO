@@ -10,10 +10,10 @@
     <main class="admin-shell">
       <section id="admin-login" class="panel admin-login">
         <div class="field-group">
-          <input id="admin-password" type="password" placeholder="口令" />
+          <input id="admin-password" type="password" placeholder="管理员口令" />
         </div>
         <p id="admin-login-error" class="error-text hidden"></p>
-        <button id="admin-login-btn" class="primary-btn" type="button">进入</button>
+        <button id="admin-login-btn" class="primary-btn" type="button">进入后台</button>
       </section>
 
       <section id="admin-app" class="hidden">
@@ -24,7 +24,7 @@
 
           <section class="panel">
             <div class="search-row">
-              <input id="player-search" type="text" placeholder="编号 / 门票码 / 昵称" />
+              <input id="player-search" type="text" placeholder="用户 ID / 门票码 / 昵称" />
               <button id="player-search-btn" class="ghost-btn" type="button">搜索</button>
             </div>
             <div id="player-results" class="player-results"></div>
@@ -32,7 +32,7 @@
 
           <section class="panel">
             <h2 id="selected-player-title">未选择</h2>
-            <div id="selected-player-card" class="selected-player empty-state">先选一个玩家。</div>
+            <div id="selected-player-card" class="selected-player empty-state">先选中一个玩家。</div>
           </section>
 
           <section class="panel">
@@ -41,6 +41,12 @@
                 <h3>重置密码</h3>
                 <input id="reset-password" type="password" placeholder="输入新的登录密码" />
                 <button data-admin-action="reset_password" class="ghost-btn" type="button">重置密码</button>
+              </div>
+
+              <div class="admin-action-card">
+                <h3>重置 ID</h3>
+                <p class="helper-text">让这个账号当前绑定的旧登录失效，之后需要用昵称和密码重新登录。</p>
+                <button data-admin-action="reset_identity" class="ghost-btn" type="button">重置 ID</button>
               </div>
 
               <div class="admin-action-card">
@@ -53,7 +59,7 @@
               <div class="admin-action-card">
                 <h3>恢复体力</h3>
                 <input id="restore-reason" type="text" placeholder="备注" />
-                <button data-admin-action="restore_stamina" class="ghost-btn" type="button">回满</button>
+                <button data-admin-action="restore_stamina" class="ghost-btn" type="button">回满体力</button>
               </div>
 
               <div class="admin-action-card">
@@ -67,7 +73,7 @@
               <div class="admin-action-card">
                 <h3>小游戏奖励</h3>
                 <select id="one-time-activity"></select>
-                <input id="one-time-score" type="number" placeholder="分值，不填用默认" />
+                <input id="one-time-score" type="number" placeholder="分值，不填则用默认" />
                 <input id="one-time-sticker" type="text" placeholder="贴纸编号" />
                 <button data-admin-action="one_time_activity" class="ghost-btn" type="button">提交</button>
               </div>
@@ -75,7 +81,7 @@
               <div class="admin-action-card">
                 <h3>摊位奖励</h3>
                 <select id="booth-select"></select>
-                <input id="booth-score" type="number" placeholder="分值，不填用默认" />
+                <input id="booth-score" type="number" placeholder="分值，不填则用默认" />
                 <input id="booth-sticker" type="text" placeholder="贴纸编号" />
                 <button data-admin-action="booth_reward" class="ghost-btn" type="button">提交</button>
               </div>

@@ -67,7 +67,7 @@ function renderPlayerResults(players) {
 function renderSelectedPlayer() {
   if (!adminState.selectedPlayer) {
     selectedPlayerTitle.textContent = '未选择';
-    selectedPlayerCard.textContent = '先选一个玩家。';
+    selectedPlayerCard.textContent = '先选中一个玩家。';
     return;
   }
 
@@ -75,15 +75,15 @@ function renderSelectedPlayer() {
   selectedPlayerTitle.textContent = player.display_name;
   selectedPlayerCard.innerHTML = `
     <div class="summary-grid">
-      <div class="summary-item"><span>编号</span><strong>${player._id}</strong></div>
+      <div class="summary-item"><span>ID</span><strong>${player._id}</strong></div>
       <div class="summary-item"><span>门票码</span><strong>${player.ticket_code}</strong></div>
       <div class="summary-item"><span>阵营</span><strong>${player.team_name}</strong></div>
       <div class="summary-item"><span>积分</span><strong>${player.score}</strong></div>
       <div class="summary-item"><span>体力</span><strong>${player.stamina}</strong></div>
       <div class="summary-item"><span>称号</span><strong>${player.title}</strong></div>
     </div>
-    <p class="helper-text">小游戏：${(player.one_time_claims || []).join('、') || '无'}</p>
-    <p class="helper-text">摊位：${(player.booth_claims || []).join('、') || '无'}</p>
+    <p class="helper-text">小游戏记录：${(player.one_time_claims || []).join('、') || '无'}</p>
+    <p class="helper-text">摊位记录：${(player.booth_claims || []).join('、') || '无'}</p>
   `;
 }
 

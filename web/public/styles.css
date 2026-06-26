@@ -117,6 +117,11 @@ p {
   box-shadow: 0 0 0 3px rgba(212, 84, 84, 0.14);
 }
 
+.admin-action-card input.invalid {
+  border-color: var(--warn);
+  box-shadow: 0 0 0 3px rgba(212, 84, 84, 0.14);
+}
+
 .primary-btn,
 .ghost-btn,
 .ghost-link,
@@ -160,6 +165,7 @@ p {
 .team-picks,
 .team-board,
 .actions-grid,
+.leaderboard-list,
 .recent-logs,
 .admin-actions,
 .booth-status,
@@ -230,6 +236,46 @@ p {
   padding: 12px 14px;
   border-radius: 18px;
   background: #eef6fb;
+}
+
+.leaderboard-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: #eef6fb;
+}
+
+.leaderboard-row.current {
+  background: linear-gradient(135deg, rgba(26, 164, 200, 0.12), rgba(47, 115, 255, 0.14));
+  border: 1px solid rgba(44, 135, 217, 0.2);
+}
+
+.leaderboard-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: #e1efff;
+  color: var(--blue);
+  font-weight: 700;
+}
+
+.leaderboard-meta {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 14px;
 }
 
 .log-item strong {

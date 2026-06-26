@@ -31,6 +31,7 @@ const registerError = document.querySelector('#register-error');
 const loginError = document.querySelector('#login-error');
 const teamBoard = document.querySelector('#team-board');
 const teamPicks = document.querySelector('#team-picks');
+const leaderboardList = document.querySelector('#leaderboard-list');
 const recentLogs = document.querySelector('#recent-logs');
 const personalLog = document.querySelector('#personal-log');
 const personalBlock = document.querySelector('#personal-block');
@@ -103,6 +104,30 @@ function renderRecentLogs(logs, container) {
     .join('');
 }
 
+function renderLeaderboard(entries, currentUserId) {
+  if (!entries.length) {
+    leaderboardList.innerHTML = '<div class="empty-state">暂无排行数据</div>';
+    return;
+  }
+
+  leaderboardList.innerHTML = entries
+    .map(
+      (entry, index) => `
+        <div class="leaderboard-row ${entry.user_id === currentUserId ? 'current' : ''}">
+          <div class="leaderboard-main">
+            <span class="rank-badge">#${index + 1}</span>
+            <div>
+              <strong>${entry.display_name}</strong>
+              <p class="leaderboard-meta">${entry.title}</p>
+            </div>
+          </div>
+          <strong>${entry.score} 分</strong>
+        </div>
+      `
+    )
+    .join('');
+}
+
 function renderTeams(teamsMap) {
   const teams = Object.values(teamsMap);
 
@@ -153,6 +178,7 @@ function renderTeams(teamsMap) {
 function renderHome(current) {
   uiState.current = current;
   renderTeams(current.teams);
+  renderLeaderboard(current.leaderboard || [], current.user?._id);
   renderRecentLogs(current.recent_logs || [], recentLogs);
 
   if (!current.registered) {
@@ -220,7 +246,7 @@ function openResultModal(result) {
   document.querySelector('#modal-team').textContent = `队伍积分 ${
     result.action_result.team_delta_self > 0 ? '+' : ''
   }${result.action_result.team_delta_self}`;
-  document.querySelector('#modal-stamina').textContent = `体力 ${result.action_result.stamina_before} → ${result.action_result.stamina_after}`;
+  document.querySelector('#modal-stamina').textContent = `体力 ${result.action_result.stamina_before} -> ${result.action_result.stamina_after}`;
 
   const eventBox = document.querySelector('#event-box');
   if (result.random_event && result.random_event.triggered) {
@@ -233,7 +259,7 @@ function openResultModal(result) {
     document.querySelector('#event-character').textContent = meta.name;
     document.querySelector('#event-title').textContent = result.random_event.name;
     document.querySelector('#event-description').textContent = result.random_event.description;
-    document.querySelector('#event-effect').textContent = `事件结算：个人${
+    document.querySelector('#event-effect').textContent = `事件结算：个人 ${
       result.random_event.scoreDelta > 0 ? '+' : ''
     }${result.random_event.scoreDelta}，队伍${result.random_event.teamDelta > 0 ? '+' : ''}${
       result.random_event.teamDelta
@@ -310,6 +336,13 @@ resetBtn.addEventListener('click', async () => {
   clearLoginErrors();
   const result = await request('/api/reset', { method: 'POST' });
   renderHome(result.state);
+});
+
+[ticketInput, nicknameInput, passwordInput].forEach((input) => {
+  input.addEventListener('input', () => setFieldInvalid(input, false));
+});
+[loginNameInput, loginPasswordInput].forEach((input) => {
+  input.addEventListener('input', () => setFieldInvalid(input, false));
 });
 
 closeModalBtn.addEventListener('click', () => resultModal.classList.add('hidden'));
