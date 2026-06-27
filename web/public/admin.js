@@ -14,10 +14,16 @@ const actionMessage = document.querySelector('#admin-action-message');
 const oneTimeSelect = document.querySelector('#one-time-activity');
 const boothSelect = document.querySelector('#booth-select');
 const resetPasswordInput = document.querySelector('#reset-password');
+const adminPageButtons = document.querySelectorAll('[data-admin-page-target]');
+const adminPages = document.querySelectorAll('.admin-page');
+const lotteryDrawBtn = document.querySelector('#lottery-draw-btn');
+const lotteryRoller = document.querySelector('#lottery-roller');
+const lotteryResult = document.querySelector('#lottery-result');
 
 const adminState = {
   selectedPlayer: null,
-  bootstrap: null
+  bootstrap: null,
+  drawingLottery: false
 };
 
 async function request(path, options = {}) {
@@ -128,6 +134,17 @@ function renderAdminLogs(logs) {
     .join('');
 }
 
+function renderLotteryResult(player) {
+  lotteryResult.classList.remove('empty-state');
+  lotteryResult.innerHTML = `
+    <div class="summary-grid">
+      <div class="summary-item"><span>中奖昵称</span><strong>${player.display_name}</strong></div>
+      <div class="summary-item"><span>用户 ID</span><strong>${player._id}</strong></div>
+      <div class="summary-item"><span>阵营</span><strong>${player.team_name}</strong></div>
+    </div>
+  `;
+}
+
 function renderBootstrap(admin) {
   adminState.bootstrap = admin;
   renderSummary(admin.summary);
@@ -138,6 +155,15 @@ function renderBootstrap(admin) {
   renderSelectedPlayer();
 }
 
+function switchAdminPage(pageName) {
+  adminPages.forEach((page) => {
+    page.classList.toggle('hidden', page.id !== `admin-page-${pageName}`);
+  });
+  adminPageButtons.forEach((button) => {
+    button.classList.toggle('active', button.dataset.adminPageTarget === pageName);
+  });
+}
+
 async function loadBootstrap() {
   const result = await request('/api/admin/bootstrap');
   if (result.error) {
@@ -146,6 +172,53 @@ async function loadBootstrap() {
   loginView.classList.add('hidden');
   adminApp.classList.remove('hidden');
   renderBootstrap(result.admin);
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+async function runLotteryAnimation(winner) {
+  const players = (adminState.bootstrap?.players || []).filter((player) => player.display_name);
+  const names = players.length ? players.map((player) => player.display_name) : [winner.display_name];
+  const rounds = 34;
+
+  lotteryRoller.classList.add('rolling');
+  for (let index = 0; index < rounds; index += 1) {
+    lotteryRoller.textContent = names[index % names.length];
+    const progress = index / rounds;
+    await sleep(42 + progress * 70);
+  }
+  lotteryRoller.textContent = winner.display_name;
+  lotteryRoller.classList.remove('rolling');
+  lotteryRoller.classList.add('winner');
+}
+
+async function drawLottery() {
+  if (adminState.drawingLottery) {
+    return;
+  }
+  adminState.drawingLottery = true;
+  lotteryDrawBtn.disabled = true;
+  lotteryResult.classList.add('empty-state');
+  lotteryResult.textContent = '抽奖中...';
+  lotteryRoller.classList.remove('winner');
+
+  const result = await request('/api/admin/lottery/draw', { method: 'POST' });
+  if (result.error) {
+    lotteryResult.textContent = result.message || '抽奖失败';
+    adminState.drawingLottery = false;
+    lotteryDrawBtn.disabled = false;
+    return;
+  }
+
+  await runLotteryAnimation(result.winner);
+  renderLotteryResult(result.winner);
+  renderBootstrap(result.admin);
+  adminState.drawingLottery = false;
+  lotteryDrawBtn.disabled = false;
 }
 
 async function searchPlayers() {
@@ -243,5 +316,11 @@ resetPasswordInput.addEventListener('input', () => resetPasswordInput.classList.
 document.querySelectorAll('[data-admin-action]').forEach((button) => {
   button.addEventListener('click', () => submitAdminAction(button.dataset.adminAction));
 });
+
+adminPageButtons.forEach((button) => {
+  button.addEventListener('click', () => switchAdminPage(button.dataset.adminPageTarget));
+});
+
+lotteryDrawBtn.addEventListener('click', drawLottery);
 
 loadBootstrap();

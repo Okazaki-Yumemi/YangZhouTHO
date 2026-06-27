@@ -718,6 +718,28 @@ function buildAdminState(state) {
   };
 }
 
+function adminDrawLottery(state) {
+  if (!state.users.length) {
+    return { error: 'NO_USERS', message: '当前没有可抽取的玩家。' };
+  }
+
+  const winner = state.users[crypto.randomInt(state.users.length)];
+  const player = getPlayerSummary(state, winner);
+  logAdminAction(state, 'lottery_draw', {
+    label: '管理员抽奖',
+    target_user_id: winner._id,
+    target_display_name: winner.display_name,
+    target_ticket_code: winner.ticket_code
+  });
+  saveState(state);
+
+  return {
+    success: true,
+    winner: player,
+    admin: buildAdminState(state)
+  };
+}
+
 function resetState() {
   const initialState = buildInitialState();
   saveState(initialState);
@@ -859,6 +881,12 @@ const server = http.createServer(async (req, res) => {
       } catch {
         sendJson(res, 400, { error: 'BAD_REQUEST', message: '请求格式错误。' });
       }
+      return;
+    }
+
+    if (req.method === 'POST' && url.pathname === '/api/admin/lottery/draw') {
+      const result = adminDrawLottery(state);
+      sendJson(res, result.error ? 400 : 200, result);
       return;
     }
   }
