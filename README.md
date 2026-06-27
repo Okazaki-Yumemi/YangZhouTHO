@@ -1,3 +1,5 @@
+<img width="846" height="1193" alt="ScreenShot_2026-06-27_102817_237" src="https://github.com/user-attachments/assets/248f7bb9-d9a8-42f7-bdc8-3884f304e735" />
+
 # 扬州 THO02 阵营探索
 
 这是一个本地运行的活动网站，分为玩家端和管理员端。
