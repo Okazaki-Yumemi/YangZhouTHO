@@ -15,7 +15,12 @@ function verifyPassword(password, salt, expectedHash) {
     return false;
   }
   const actual = crypto.scryptSync(String(password || ''), salt, 64).toString('hex');
-  return crypto.timingSafeEqual(Buffer.from(actual, 'hex'), Buffer.from(expectedHash, 'hex'));
+  const actualBuffer = Buffer.from(actual, 'hex');
+  const expectedBuffer = Buffer.from(expectedHash, 'hex');
+  return (
+    actualBuffer.length === expectedBuffer.length &&
+    crypto.timingSafeEqual(actualBuffer, expectedBuffer)
+  );
 }
 
 function findUserByDisplayName(users, displayName) {

@@ -98,6 +98,7 @@ function testPasswordHashing() {
   const record = hashPassword('secret-pass');
   assert.equal(verifyPassword('secret-pass', record.salt, record.hash), true);
   assert.equal(verifyPassword('wrong-pass', record.salt, record.hash), false);
+  assert.equal(verifyPassword('secret-pass', record.salt, 'bad-hash'), false);
 }
 
 function testDisplayNameLookup() {

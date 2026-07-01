@@ -1,15 +1,82 @@
+const CHARACTER_ASSETS = {
+  cirno: {
+    name: '琪露诺',
+    src: '/characters/cirno.png',
+    width: 470,
+    height: 730,
+    bg: '#e5f8ff',
+    line: 'rgba(45, 139, 208, 0.24)'
+  },
+  daiyousei: {
+    name: '大妖精',
+    src: '/characters/daiyousei.png',
+    width: 520,
+    height: 750,
+    bg: '#e9f8ed',
+    line: 'rgba(48, 150, 94, 0.24)'
+  },
+  sakuya: {
+    name: '咲夜',
+    src: '/characters/sakuya.png',
+    width: 510,
+    height: 830,
+    bg: '#eef3fb',
+    line: 'rgba(70, 96, 140, 0.22)'
+  },
+  seija: {
+    name: '鬼人正邪',
+    src: '/characters/seija.png',
+    width: 420,
+    height: 740,
+    bg: '#f5eef9',
+    line: 'rgba(139, 87, 169, 0.22)'
+  },
+  remilia: {
+    name: '蕾米莉亚',
+    src: '/characters/remilia.png',
+    width: 720,
+    height: 790,
+    bg: '#fff0f3',
+    line: 'rgba(193, 77, 98, 0.22)'
+  },
+  marisa: {
+    name: '魔理沙',
+    src: '/characters/marisa.png',
+    width: 520,
+    height: 810,
+    bg: '#fff7df',
+    line: 'rgba(194, 143, 44, 0.24)'
+  },
+  patchouli: {
+    name: '帕秋莉',
+    src: '/characters/patchouli.png',
+    width: 520,
+    height: 800,
+    bg: '#f2edfb',
+    line: 'rgba(103, 84, 166, 0.22)'
+  },
+  meiling: {
+    name: '红美铃',
+    src: '/characters/meiling.png',
+    width: 620,
+    height: 900,
+    bg: '#eaf7ef',
+    line: 'rgba(40, 150, 95, 0.24)'
+  }
+};
+
 const TEAM_META = {
-  cirno: { captain: '琪露诺', image: '/characters/cirno.png' },
-  daiyousei: { captain: '大妖精', image: '/characters/daiyousei.png' }
+  cirno: { captain: '琪露诺', asset: CHARACTER_ASSETS.cirno },
+  daiyousei: { captain: '大妖精', asset: CHARACTER_ASSETS.daiyousei }
 };
 
 const EVENT_META = {
-  anti_fairy_trap: { name: '咲夜', image: '/characters/sakuya.png' },
-  seija_reverse: { name: '鬼人正邪', image: '/characters/seija.png' },
-  scarlet_dining: { name: '蕾米莉亚', image: '/characters/remilia.png' },
-  marisa_gift: { name: '魔理沙', image: '/characters/marisa.png' },
-  mystery_tea: { name: '帕秋莉', image: '/characters/patchouli.png' },
-  meiling_sleep: { name: '红美铃', image: '/characters/meiling.png' }
+  anti_fairy_trap: { name: '咲夜', asset: CHARACTER_ASSETS.sakuya },
+  seija_reverse: { name: '鬼人正邪', asset: CHARACTER_ASSETS.seija },
+  scarlet_dining: { name: '蕾米莉亚', asset: CHARACTER_ASSETS.remilia },
+  marisa_gift: { name: '魔理沙', asset: CHARACTER_ASSETS.marisa },
+  mystery_tea: { name: '帕秋莉', asset: CHARACTER_ASSETS.patchouli },
+  meiling_sleep: { name: '红美铃', asset: CHARACTER_ASSETS.meiling }
 };
 
 const TEAM_NAME = {
@@ -33,13 +100,41 @@ const loginError = document.querySelector('#login-error');
 const teamBoard = document.querySelector('#team-board');
 const teamPicks = document.querySelector('#team-picks');
 const leaderboardList = document.querySelector('#leaderboard-list');
-const recentLogs = document.querySelector('#recent-logs');
 const personalLog = document.querySelector('#personal-log');
 const personalBlock = document.querySelector('#personal-block');
 const actionsGrid = document.querySelector('#actions-grid');
-const resetBtn = document.querySelector('#reset-btn');
 const resultModal = document.querySelector('#result-modal');
 const closeModalBtn = document.querySelector('#close-modal');
+const COLLAPSED_LOG_VISIBLE_COUNT = 3;
+
+const HTML_ESCAPE_MAP = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;'
+};
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, (char) => HTML_ESCAPE_MAP[char]);
+}
+
+function renderCharacterFrame(asset, alt, options = {}) {
+  const loading = options.loading || 'lazy';
+  const priority = options.priority ? ' fetchpriority="high"' : '';
+  return `
+    <span class="character-frame" style="--asset-bg: ${asset.bg}; --asset-line: ${asset.line};">
+      <img
+        src="${asset.src}"
+        alt="${escapeHtml(alt || asset.name)}"
+        width="${asset.width}"
+        height="${asset.height}"
+        loading="${loading}"
+        decoding="async"${priority}
+      />
+    </span>
+  `;
+}
 
 function formatSeconds(totalSec) {
   const value = Math.max(0, Number(totalSec || 0));
@@ -84,27 +179,43 @@ function clearLoginErrors() {
   [loginNameInput, loginPasswordInput].forEach((input) => setFieldInvalid(input, false));
 }
 
-function renderRecentLogs(logs, container) {
+function renderLogItem(log) {
+  const actionName = escapeHtml(log.action_name || '记录');
+  const teamName = escapeHtml(TEAM_NAME[log.team] || log.team || '-');
+  const scoreDelta =
+    typeof log.score_delta === 'number' ? `${log.score_delta > 0 ? '+' : ''}${log.score_delta}` : '-';
+
+  return `
+    <div class="log-item">
+      <strong>${actionName}</strong>
+      <span>${teamName} · 个人 ${scoreDelta}</span>
+    </div>
+  `;
+}
+
+function renderRecentLogs(logs, container, options = {}) {
   if (!logs.length) {
     container.innerHTML = '<div class="log-item">还没有记录。</div>';
     return;
   }
 
-  container.innerHTML = logs
-    .map((log) => {
-      const actionName = log.action_name || '记录';
-      const teamName = TEAM_NAME[log.team] || log.team || '-';
-      const scoreDelta =
-        typeof log.score_delta === 'number' ? `${log.score_delta > 0 ? '+' : ''}${log.score_delta}` : '-';
+  const collapsedCount = options.collapsedCount ?? COLLAPSED_LOG_VISIBLE_COUNT;
+  const visibleLogs = logs.slice(0, collapsedCount);
+  const foldedLogs = logs.slice(collapsedCount);
 
-      return `
-        <div class="log-item">
-          <strong>${actionName}</strong>
-          <span>${teamName} · 个人 ${scoreDelta}</span>
-        </div>
-      `;
-    })
-    .join('');
+  container.innerHTML = [
+    visibleLogs.map(renderLogItem).join(''),
+    foldedLogs.length
+      ? `
+        <details class="log-fold">
+          <summary>展开另外 ${foldedLogs.length} 条记录</summary>
+          <div class="log-fold-list">
+            ${foldedLogs.map(renderLogItem).join('')}
+          </div>
+        </details>
+      `
+      : ''
+  ].join('');
 }
 
 function renderLeaderboard(entries, currentUserId) {
@@ -120,8 +231,8 @@ function renderLeaderboard(entries, currentUserId) {
           <div class="leaderboard-main">
             <span class="rank-badge">#${index + 1}</span>
             <div>
-              <strong>${entry.display_name}</strong>
-              <p class="leaderboard-meta">${entry.title}</p>
+              <strong>${escapeHtml(entry.display_name)}</strong>
+              <p class="leaderboard-meta">${escapeHtml(entry.title)}</p>
             </div>
           </div>
           <strong>${entry.score} 分</strong>
@@ -137,12 +248,13 @@ function renderTeams(teamsMap) {
   teamBoard.innerHTML = teams
     .map((team) => {
       const meta = TEAM_META[team._id];
+      const teamName = escapeHtml(team.name);
       return `
         <article class="team-card compact">
-          <img src="${meta.image}" alt="${team.name}" />
+          ${renderCharacterFrame(meta.asset, team.name)}
           <div>
             <p class="eyebrow">领队 ${meta.captain}</p>
-            <h3>${team.name}</h3>
+            <h3>${teamName}</h3>
             <p>${team.member_count} 人</p>
             <p>${team.total_score} 分</p>
           </div>
@@ -155,12 +267,13 @@ function renderTeams(teamsMap) {
     .map((team) => {
       const meta = TEAM_META[team._id];
       const selectedClass = uiState.selectedTeam === team._id ? 'selected' : '';
+      const teamName = escapeHtml(team.name);
       return `
         <article class="team-card ${selectedClass}" data-team="${team._id}">
-          <img src="${meta.image}" alt="${team.name}" />
+          ${renderCharacterFrame(meta.asset, team.name, { loading: 'eager', priority: true })}
           <div>
             <p class="eyebrow">领队 ${meta.captain}</p>
-            <h3>${team.name}</h3>
+            <h3>${teamName}</h3>
             <p>${team.member_count} 人</p>
             <p>${team.total_score} 分</p>
             <button type="button">选择这支队伍</button>
@@ -182,7 +295,6 @@ function renderHome(current) {
   uiState.current = current;
   renderTeams(current.teams);
   renderLeaderboard(current.leaderboard || [], current.user?._id);
-  renderRecentLogs(current.recent_logs || [], recentLogs);
 
   if (!current.registered) {
     registerView.classList.remove('hidden');
@@ -210,8 +322,8 @@ function renderHome(current) {
     .map(
       (action) => `
         <article class="action-card">
-          <h3>${action.name}</h3>
-          <p>${action.description}</p>
+          <h3>${escapeHtml(action.name)}</h3>
+          <p>${escapeHtml(action.description)}</p>
           <button type="button" data-action="${action._id}">消耗 ${action.stamina_cost} 点体力</button>
         </article>
       `
@@ -236,8 +348,7 @@ function renderHome(current) {
     });
   });
 
-  const selfLogs = (current.recent_logs || []).filter((log) => log.user_id === current.user._id);
-  renderRecentLogs(selfLogs, personalLog);
+  renderRecentLogs(current.recent_logs || [], personalLog);
 }
 
 function openResultModal(result) {
@@ -255,10 +366,15 @@ function openResultModal(result) {
   if (result.random_event && result.random_event.triggered) {
     const meta = EVENT_META[result.random_event.eventId] || {
       name: '红魔馆住民',
-      image: '/characters/remilia.png'
+      asset: CHARACTER_ASSETS.remilia
     };
-    document.querySelector('#event-image').src = meta.image;
-    document.querySelector('#event-image').alt = meta.name;
+    const eventImage = document.querySelector('#event-image');
+    eventImage.src = meta.asset.src;
+    eventImage.alt = meta.name;
+    eventImage.width = meta.asset.width;
+    eventImage.height = meta.asset.height;
+    eventImage.parentElement.style.setProperty('--asset-bg', meta.asset.bg);
+    eventImage.parentElement.style.setProperty('--asset-line', meta.asset.line);
     document.querySelector('#event-character').textContent = meta.name;
     document.querySelector('#event-title').textContent = result.random_event.name;
     document.querySelector('#event-description').textContent = result.random_event.description;
@@ -332,20 +448,6 @@ loginBtn.addEventListener('click', async () => {
     loginError.classList.remove('hidden');
     return;
   }
-  renderHome(result.state);
-});
-
-resetBtn.addEventListener('click', async () => {
-  uiState.selectedTeam = '';
-  ticketInput.value = '';
-  nicknameInput.value = '';
-  passwordInput.value = '';
-  passwordConfirmInput.value = '';
-  loginNameInput.value = '';
-  loginPasswordInput.value = '';
-  clearRegisterErrors();
-  clearLoginErrors();
-  const result = await request('/api/reset', { method: 'POST' });
   renderHome(result.state);
 });
 

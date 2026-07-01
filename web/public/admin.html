@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>THO02 管理后台</title>
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/styles.css?v=20260701-reset-admin" />
   </head>
   <body class="admin-body">
     <main class="admin-shell">
@@ -101,6 +101,25 @@
           <section class="panel">
             <div id="admin-logs" class="recent-logs"></div>
           </section>
+
+          <section class="panel danger-zone">
+            <p class="eyebrow">危险操作</p>
+            <h2>重置活动数据</h2>
+            <p class="helper-text">会清空玩家、积分、领取记录、行动记录和抽奖记录。该操作不能撤销。</p>
+            <button id="admin-reset-open" class="danger-btn wide-btn" type="button">重置全部数据</button>
+
+            <div id="admin-reset-confirm" class="danger-confirm hidden">
+              <div class="field-group">
+                <label for="admin-reset-password">再次输入管理员口令</label>
+                <input id="admin-reset-password" type="password" placeholder="管理员口令" />
+              </div>
+              <div class="danger-actions">
+                <button id="admin-reset-cancel" class="ghost-btn" type="button">取消</button>
+                <button id="admin-reset-submit" class="danger-btn" type="button">确认重置</button>
+              </div>
+              <p id="admin-reset-message" class="error-text hidden"></p>
+            </div>
+          </section>
         </div>
 
         <div id="admin-page-lottery" class="admin-page hidden">
@@ -125,6 +144,6 @@
       </section>
     </main>
 
-    <script src="/admin.js"></script>
+    <script src="/admin.js?v=20260701-reset-admin"></script>
   </body>
 </html>

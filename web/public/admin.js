@@ -19,12 +19,30 @@ const adminPages = document.querySelectorAll('.admin-page');
 const lotteryDrawBtn = document.querySelector('#lottery-draw-btn');
 const lotteryRoller = document.querySelector('#lottery-roller');
 const lotteryResult = document.querySelector('#lottery-result');
+const adminResetOpenBtn = document.querySelector('#admin-reset-open');
+const adminResetConfirm = document.querySelector('#admin-reset-confirm');
+const adminResetCancelBtn = document.querySelector('#admin-reset-cancel');
+const adminResetSubmitBtn = document.querySelector('#admin-reset-submit');
+const adminResetPasswordInput = document.querySelector('#admin-reset-password');
+const adminResetMessage = document.querySelector('#admin-reset-message');
 
 const adminState = {
   selectedPlayer: null,
   bootstrap: null,
   drawingLottery: false
 };
+
+const HTML_ESCAPE_MAP = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;'
+};
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, (char) => HTML_ESCAPE_MAP[char]);
+}
 
 async function request(path, options = {}) {
   const response = await fetch(path, {
@@ -54,8 +72,8 @@ function renderPlayerResults(players) {
     .map(
       (player) => `
         <button class="player-result" data-player="${player._id}" type="button">
-          <strong>${player.display_name}</strong>
-          <span>${player.ticket_code} · ${player.team_name} · ${player.score} 分</span>
+          <strong>${escapeHtml(player.display_name)}</strong>
+          <span>${escapeHtml(player.ticket_code)} · ${escapeHtml(player.team_name)} · ${player.score} 分</span>
         </button>
       `
     )
@@ -81,15 +99,15 @@ function renderSelectedPlayer() {
   selectedPlayerTitle.textContent = player.display_name;
   selectedPlayerCard.innerHTML = `
     <div class="summary-grid">
-      <div class="summary-item"><span>ID</span><strong>${player._id}</strong></div>
-      <div class="summary-item"><span>门票码</span><strong>${player.ticket_code}</strong></div>
-      <div class="summary-item"><span>阵营</span><strong>${player.team_name}</strong></div>
+      <div class="summary-item"><span>ID</span><strong>${escapeHtml(player._id)}</strong></div>
+      <div class="summary-item"><span>门票码</span><strong>${escapeHtml(player.ticket_code)}</strong></div>
+      <div class="summary-item"><span>阵营</span><strong>${escapeHtml(player.team_name)}</strong></div>
       <div class="summary-item"><span>积分</span><strong>${player.score}</strong></div>
       <div class="summary-item"><span>体力</span><strong>${player.stamina}</strong></div>
-      <div class="summary-item"><span>称号</span><strong>${player.title}</strong></div>
+      <div class="summary-item"><span>称号</span><strong>${escapeHtml(player.title)}</strong></div>
     </div>
-    <p class="helper-text">小游戏记录：${(player.one_time_claims || []).join('、') || '无'}</p>
-    <p class="helper-text">摊位记录：${(player.booth_claims || []).join('、') || '无'}</p>
+    <p class="helper-text">小游戏记录：${escapeHtml((player.one_time_claims || []).join('、') || '无')}</p>
+    <p class="helper-text">摊位记录：${escapeHtml((player.booth_claims || []).join('、') || '无')}</p>
   `;
 }
 
@@ -98,7 +116,7 @@ function renderBooths(booths) {
     .map(
       (booth) => `
         <div class="booth-item">
-          <strong>${booth.name}</strong>
+          <strong>${escapeHtml(booth.name)}</strong>
           <span>剩余 ${booth.remaining_slots}</span>
         </div>
       `
@@ -106,13 +124,19 @@ function renderBooths(booths) {
     .join('');
 
   boothSelect.innerHTML = booths
-    .map((booth) => `<option value="${booth.id}">${booth.name}（默认 ${booth.score} 分，剩余 ${booth.remaining_slots}）</option>`)
+    .map(
+      (booth) =>
+        `<option value="${escapeHtml(booth.id)}">${escapeHtml(booth.name)}（默认 ${booth.score} 分，剩余 ${booth.remaining_slots}）</option>`
+    )
     .join('');
 }
 
 function renderActivities(activities) {
   oneTimeSelect.innerHTML = activities
-    .map((activity) => `<option value="${activity.id}">${activity.name}（默认 ${activity.score} 分）</option>`)
+    .map(
+      (activity) =>
+        `<option value="${escapeHtml(activity.id)}">${escapeHtml(activity.name)}（默认 ${activity.score} 分）</option>`
+    )
     .join('');
 }
 
@@ -126,8 +150,8 @@ function renderAdminLogs(logs) {
     .map(
       (log) => `
         <div class="log-item">
-          <strong>${log.action}</strong>
-          <span>${log.detail.target_display_name || ''} ${log.detail.label || ''}</span>
+          <strong>${escapeHtml(log.action)}</strong>
+          <span>${escapeHtml(log.detail.target_display_name || '')} ${escapeHtml(log.detail.label || '')}</span>
         </div>
       `
     )
@@ -138,9 +162,9 @@ function renderLotteryResult(player) {
   lotteryResult.classList.remove('empty-state');
   lotteryResult.innerHTML = `
     <div class="summary-grid">
-      <div class="summary-item"><span>中奖昵称</span><strong>${player.display_name}</strong></div>
-      <div class="summary-item"><span>用户 ID</span><strong>${player._id}</strong></div>
-      <div class="summary-item"><span>阵营</span><strong>${player.team_name}</strong></div>
+      <div class="summary-item"><span>中奖昵称</span><strong>${escapeHtml(player.display_name)}</strong></div>
+      <div class="summary-item"><span>用户 ID</span><strong>${escapeHtml(player._id)}</strong></div>
+      <div class="summary-item"><span>阵营</span><strong>${escapeHtml(player.team_name)}</strong></div>
     </div>
   `;
 }
@@ -286,6 +310,48 @@ async function submitAdminAction(grantType) {
   }
 }
 
+function showAdminResetMessage(message, isError = true) {
+  adminResetMessage.textContent = message;
+  adminResetMessage.classList.toggle('error-text', isError);
+  adminResetMessage.classList.toggle('helper-text', !isError);
+  adminResetMessage.classList.remove('hidden');
+}
+
+function closeAdminResetConfirm() {
+  adminResetConfirm.classList.add('hidden');
+  adminResetPasswordInput.value = '';
+  adminResetPasswordInput.classList.remove('invalid');
+  adminResetMessage.classList.add('hidden');
+}
+
+async function resetAllData() {
+  const password = adminResetPasswordInput.value.trim();
+  if (!password) {
+    adminResetPasswordInput.classList.add('invalid');
+    showAdminResetMessage('请输入管理员口令。');
+    return;
+  }
+
+  adminResetSubmitBtn.disabled = true;
+  const result = await request('/api/admin/reset', {
+    method: 'POST',
+    body: JSON.stringify({ password })
+  });
+  adminResetSubmitBtn.disabled = false;
+
+  if (result.error) {
+    adminResetPasswordInput.classList.add('invalid');
+    showAdminResetMessage(result.message || '重置失败。');
+    return;
+  }
+
+  adminState.selectedPlayer = null;
+  playerSearch.value = '';
+  closeAdminResetConfirm();
+  renderBootstrap(result.admin);
+  actionMessage.textContent = result.message || '数据已重置。';
+}
+
 loginBtn.addEventListener('click', async () => {
   loginError.classList.add('hidden');
   const result = await request('/api/admin/login', {
@@ -312,6 +378,10 @@ playerSearch.addEventListener('keydown', (event) => {
 });
 
 resetPasswordInput.addEventListener('input', () => resetPasswordInput.classList.remove('invalid'));
+adminResetPasswordInput.addEventListener('input', () => {
+  adminResetPasswordInput.classList.remove('invalid');
+  adminResetMessage.classList.add('hidden');
+});
 
 document.querySelectorAll('[data-admin-action]').forEach((button) => {
   button.addEventListener('click', () => submitAdminAction(button.dataset.adminAction));
@@ -322,5 +392,11 @@ adminPageButtons.forEach((button) => {
 });
 
 lotteryDrawBtn.addEventListener('click', drawLottery);
+adminResetOpenBtn.addEventListener('click', () => {
+  adminResetConfirm.classList.remove('hidden');
+  adminResetPasswordInput.focus();
+});
+adminResetCancelBtn.addEventListener('click', closeAdminResetConfirm);
+adminResetSubmitBtn.addEventListener('click', resetAllData);
 
 loadBootstrap();

@@ -21,6 +21,7 @@ const PUBLIC_DIR = path.join(__dirname, 'public');
 const DATA_DIR = path.join(ROOT, 'data');
 const STATE_FILE = path.join(DATA_DIR, 'state.json');
 const ADMIN_CONFIG_FILE = path.join(DATA_DIR, 'admin.local.json');
+const MAX_JSON_BODY_BYTES = 64 * 1024;
 const DEFAULT_ADMIN_CONFIG = {
   password: 'THOADMIN',
   entryPath: '/staff-only-admin.html'
@@ -63,6 +64,23 @@ function loadAdminConfig() {
   return { password, entryPath };
 }
 
+function createInitialAdminState() {
+  return {
+    sessions: {},
+    oneTimeActivities: [
+      { id: 'stage_game_a', name: '舞台小游戏 A', score: 1 },
+      { id: 'stage_game_b', name: '舞台小游戏 B', score: 1 },
+      { id: 'stage_game_c', name: '舞台小游戏 C', score: 1 }
+    ],
+    boothCampaigns: [
+      { id: 'booth_food', name: '小吃摊位', remaining_slots: 3, score: 2 },
+      { id: 'booth_drink', name: '饮品摊位', remaining_slots: 3, score: 2 },
+      { id: 'booth_goods', name: '周边摊位', remaining_slots: 3, score: 2 }
+    ],
+    logs: []
+  };
+}
+
 function buildInitialState() {
   return {
     config: readJson(path.join(ROOT, 'shared', 'seeds', 'activity-config.json')),
@@ -76,21 +94,22 @@ function buildInitialState() {
     grantLogs: [],
     requestLocks: [],
     sessions: {},
-    admin: {
-      sessions: {},
-      oneTimeActivities: [
-        { id: 'stage_game_a', name: '舞台小游戏 A', score: 1 },
-        { id: 'stage_game_b', name: '舞台小游戏 B', score: 1 },
-        { id: 'stage_game_c', name: '舞台小游戏 C', score: 1 }
-      ],
-      boothCampaigns: [
-        { id: 'booth_food', name: '小吃摊位', remaining_slots: 3, score: 2 },
-        { id: 'booth_drink', name: '饮品摊位', remaining_slots: 3, score: 2 },
-        { id: 'booth_goods', name: '周边摊位', remaining_slots: 3, score: 2 }
-      ],
-      logs: []
-    }
+    admin: createInitialAdminState()
   };
+}
+
+function migrateState(saved) {
+  const defaultAdmin = createInitialAdminState();
+  saved.admin = saved.admin || {};
+  saved.admin.sessions = saved.admin.sessions || {};
+  saved.admin.oneTimeActivities = saved.admin.oneTimeActivities || defaultAdmin.oneTimeActivities;
+  saved.admin.boothCampaigns = saved.admin.boothCampaigns || defaultAdmin.boothCampaigns;
+  saved.admin.logs = saved.admin.logs || [];
+  saved.actionLogs = saved.actionLogs || [];
+  saved.grantLogs = saved.grantLogs || [];
+  saved.requestLocks = saved.requestLocks || [];
+  saved.sessions = saved.sessions || {};
+  return saved;
 }
 
 function loadState() {
@@ -101,26 +120,7 @@ function loadState() {
     return initialState;
   }
 
-  const saved = readJson(STATE_FILE);
-  if (!saved.admin) {
-    saved.admin = buildInitialState().admin;
-  }
-  if (!saved.admin.sessions) {
-    saved.admin.sessions = {};
-  }
-  if (!saved.admin.oneTimeActivities) {
-    saved.admin.oneTimeActivities = buildInitialState().admin.oneTimeActivities;
-  }
-  if (!saved.admin.boothCampaigns) {
-    saved.admin.boothCampaigns = buildInitialState().admin.boothCampaigns;
-  }
-  if (!saved.admin.logs) {
-    saved.admin.logs = [];
-  }
-  if (!saved.grantLogs) {
-    saved.grantLogs = [];
-  }
-  return saved;
+  return migrateState(readJson(STATE_FILE));
 }
 
 function saveState(state) {
@@ -198,6 +198,11 @@ function collectBody(req) {
   return new Promise((resolve, reject) => {
     let raw = '';
     req.on('data', (chunk) => {
+      if (raw.length + chunk.length > MAX_JSON_BODY_BYTES) {
+        req.destroy();
+        reject(new Error('Request body too large'));
+        return;
+      }
       raw += chunk;
     });
     req.on('end', () => {
@@ -277,10 +282,19 @@ function selectActionsForUser(state, user, openid) {
   return picks;
 }
 
-function buildRecentFeed(state) {
-  return [...state.actionLogs, ...state.grantLogs]
+function buildPersonalActionFeed(state, user) {
+  if (!user) {
+    return [];
+  }
+
+  return state.actionLogs
+    .filter((log) => log.user_id === user._id)
     .sort((a, b) => b.created_at - a.created_at)
     .slice(0, 10);
+}
+
+function getTeamName(teamId) {
+  return teamId === TEAM_IDS.CIRNO ? '琪露诺探索小队' : '大妖精探索小队';
 }
 
 function buildLeaderboard(state) {
@@ -311,7 +325,7 @@ function buildHomeState(state, openid) {
     teams: mapTeamsById(state),
     config: state.config,
     available_actions: user ? selectActionsForUser(state, user, openid) : [],
-    recent_logs: buildRecentFeed(state),
+    recent_logs: buildPersonalActionFeed(state, user),
     leaderboard: buildLeaderboard(state)
   };
 }
@@ -354,7 +368,6 @@ function registerUser(state, openid, payload) {
     _id: `user_${createToken()}`,
     openid,
     ticket_code: code,
-    display_name: payload.display_name || `游客${String(state.users.length + 1).padStart(4, '0')}`,
     display_name: displayName,
     password_salt: passwordRecord.salt,
     password_hash: passwordRecord.hash,
@@ -436,6 +449,9 @@ function performAction(state, openid, payload) {
   }
 
   state.requestLocks.push(requestKey);
+  if (state.requestLocks.length > 2000) {
+    state.requestLocks.splice(0, state.requestLocks.length - 2000);
+  }
 
   const teamsMap = mapTeamsById(state);
   const ownTeam = teamsMap[user.team];
@@ -525,7 +541,7 @@ function getPlayerSummary(state, user) {
   const normalized = normalizeUser(user, state);
   return {
     ...normalized,
-    team_name: user.team === TEAM_IDS.CIRNO ? '琪露诺探索小队' : '大妖精探索小队'
+    team_name: getTeamName(user.team)
   };
 }
 
@@ -740,10 +756,29 @@ function adminDrawLottery(state) {
   };
 }
 
-function resetState() {
-  const initialState = buildInitialState();
-  saveState(initialState);
-  return initialState;
+function resetStateForAdmin(adminSessionId) {
+  const nextState = buildInitialState();
+  nextState.admin.sessions[adminSessionId] = {
+    created_at: nowSec(),
+    reset_at: nowSec()
+  };
+  saveState(nextState);
+  return nextState;
+}
+
+function resolvePublicFilePath(routePath) {
+  let relativePath = '';
+  try {
+    relativePath = decodeURIComponent(routePath).replace(/^\/+/, '');
+  } catch {
+    return null;
+  }
+  const filePath = path.resolve(PUBLIC_DIR, relativePath);
+  const relativeToPublic = path.relative(PUBLIC_DIR, filePath);
+  if (relativeToPublic.startsWith('..') || path.isAbsolute(relativeToPublic)) {
+    return null;
+  }
+  return filePath;
 }
 
 function serveStatic(res, pathname, adminConfig) {
@@ -752,10 +787,8 @@ function serveStatic(res, pathname, adminConfig) {
     routePath = '/admin.html';
   }
 
-  const relativePath = decodeURIComponent(routePath).replace(/^\/+/, '');
-  const filePath = path.join(PUBLIC_DIR, relativePath);
-
-  if (!filePath.startsWith(PUBLIC_DIR)) {
+  const filePath = resolvePublicFilePath(routePath);
+  if (!filePath) {
     res.writeHead(403);
     res.end('Forbidden');
     return;
@@ -767,7 +800,13 @@ function serveStatic(res, pathname, adminConfig) {
   }
 
   const ext = path.extname(filePath).toLowerCase();
-  res.writeHead(200, { 'Content-Type': MIME_TYPES[ext] || 'application/octet-stream' });
+  const headers = { 'Content-Type': MIME_TYPES[ext] || 'application/octet-stream' };
+  if (['.png', '.jpg', '.jpeg'].includes(ext)) {
+    headers['Cache-Control'] = 'public, max-age=3600';
+  } else if (['.html', '.css', '.js'].includes(ext)) {
+    headers['Cache-Control'] = 'no-cache';
+  }
+  res.writeHead(200, headers);
   fs.createReadStream(filePath).pipe(res);
 }
 
@@ -818,12 +857,6 @@ const server = http.createServer(async (req, res) => {
     } catch {
       sendJson(res, 400, { error: 'BAD_REQUEST', message: '请求格式错误。' });
     }
-    return;
-  }
-
-  if (req.method === 'POST' && url.pathname === '/api/reset') {
-    const nextState = resetState();
-    sendJson(res, 200, { success: true, state: buildHomeState(nextState, session.openid) });
     return;
   }
 
@@ -887,6 +920,25 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'POST' && url.pathname === '/api/admin/lottery/draw') {
       const result = adminDrawLottery(state);
       sendJson(res, result.error ? 400 : 200, result);
+      return;
+    }
+
+    if (req.method === 'POST' && url.pathname === '/api/admin/reset') {
+      try {
+        const body = await collectBody(req);
+        if (body.password !== adminConfig.password) {
+          sendJson(res, 401, { error: 'FORBIDDEN', message: '口令错误，未重置数据。' });
+          return;
+        }
+        const nextState = resetStateForAdmin(adminSession.sessionId);
+        sendJson(res, 200, {
+          success: true,
+          message: '数据已重置。',
+          admin: buildAdminState(nextState)
+        });
+      } catch {
+        sendJson(res, 400, { error: 'BAD_REQUEST', message: '请求格式错误。' });
+      }
       return;
     }
   }
